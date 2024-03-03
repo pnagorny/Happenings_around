@@ -5,17 +5,23 @@
       <SignInParent/>
     </div>
   </div>
+  <div class="eventList">
+
+  </div>
+  <div class="googleMap">
+    <GoogleMap/>
+  </div>
 </template>
 
 <script>
 import { ref, onBeforeMount, onMounted } from 'vue';
-import firebase from 'firebase/compat/app';
 import SignInParent from '../components/SignInParent.vue';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
+import GoogleMap from '../components/GoogleMap.vue';
 
 export default {
   components: {
-    SignInParent,
+    SignInParent, GoogleMap
   },
   setup () {
     const name = ref("");

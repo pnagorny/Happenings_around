@@ -4,6 +4,8 @@ import router from './router'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import VueGoogleMaps from '@fawmi/vue-google-maps';
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyD4U6OwKlQ5dQJt23jd8yg3S13nQyf566M",
@@ -17,4 +19,9 @@ var firebaseConfig = {
 
   firebase.initializeApp(firebaseConfig)
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4',
+},
+}).mount('#app')
+
