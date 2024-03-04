@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     async handleFormSubmit() {
-      //validate form
       if (
         !this.formData.street ||
         !this.formData.city ||
@@ -62,8 +61,6 @@ export default {
         alert("You must add a full address!");
         return;
       }
-
-      //Make request
       let address = `${this.formData.street}, ${this.formData.city}, ${this.formData.state} ${this.formData.zip}`;
       let { data } = await axios.post(
         "https://geocodeaddressandsave-ohpijyn6fq-uc.a.run.app",
@@ -76,8 +73,6 @@ export default {
         alert("No results for address");
         return;
       }
-
-      //massage data to fit our schema
       let obj = {
         address: data.address,
         geoPoint: {
@@ -85,11 +80,8 @@ export default {
           longitude: data.geoPoint._longitude,
         },
       };
-
-      //add to saved locations to update map
       this.markers.push(obj);
-
-      //clear form
+      
       this.formData.street = "";
       this.formData.city = "";
       this.formData.state = "";
