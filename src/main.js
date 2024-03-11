@@ -24,6 +24,7 @@ export const db = Firestore();
 createApp(App).use(router).use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4',
-},
+}
 }).mount('#app')
+
 

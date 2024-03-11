@@ -9,6 +9,14 @@
   <div>
     Teraz jestes zalogowany eluwka
   </div>
+  <div class="content">
+    <div class="eventList">
+      <EventList/>
+    </div>
+    <div class="googleMap">
+      <GoogleMap/>
+    </div>
+</div>
 </template>
 
 <script>
@@ -16,10 +24,12 @@ import { ref, onBeforeMount } from 'vue';
 import firebase from 'firebase/compat/app';
 import SignInParent from '../components/SignInParent.vue'
 import {useRouter} from 'vue-router';
+import GoogleMap from '../components/GoogleMap.vue';
+import EventList from '../components/EventList.vue';
 
 export default {
   components: {
-    SignInParent,
+    SignInParent, GoogleMap, EventList,
   },
   setup () {
     const user = firebase.auth().currentUser;

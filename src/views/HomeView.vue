@@ -5,23 +5,26 @@
       <SignInParent/>
     </div>
   </div>
-  <div class="eventList">
-
-  </div>
-  <div class="googleMap">
-    <GoogleMap/>
-  </div>
+  <div class="content">
+    <div class="eventList">
+      <EventList/>
+    </div>
+    <div class="googleMap">
+      <GoogleMap/>
+    </div>
+</div>
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import SignInParent from '../components/SignInParent.vue';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
+import EventList from '../components/EventList.vue';
 
 export default {
   components: {
-    SignInParent, GoogleMap
+    SignInParent, GoogleMap, EventList,
   },
   setup () {
     const name = ref("");
@@ -56,7 +59,7 @@ export default {
 </script>
 
 <style>
-.topBar{
+.topBar {
   background-color: cadetblue;
   height: 3rem;
   width: 100%;
@@ -65,14 +68,22 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-.topButtons{
+}
+.topButtons {
   display: flex;
   gap: 0.2rem;
 }
-body{
+.content {
+  display: flex;
+}
+.eventList, .googleMap {
+  flex: 1; /* This will make them take equal space */
+  padding: 10px;
+}
+body {
   padding: 0px;
   margin: 0px;
 }
-}
 </style>
+
 

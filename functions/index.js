@@ -26,7 +26,10 @@ const googleMapsApiKey = "AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4";
 
 exports.geocodeAddressAndSave = onRequest(async (request, response) => {
   try {
-    const address = request.body.address;
+    const {address,
+      eventName,
+      eventDateTime,
+      eventDescription} = request.body;
     const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleMapsApiKey}`);
 
     if (data.status !== "OK") {
@@ -42,6 +45,9 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
       geoPoint: new admin.firestore.
           GeoPoint(geocodedLocation.geometry.location.lat,
               geocodedLocation.geometry.location.lng),
+      eventName: eventName,
+      eventDateTime: eventDateTime,
+      eventDescription: eventDescription,
     };
 
     await db.collection("locations").add(objGeocodedLocation);
@@ -49,9 +55,9 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
       response.status(200).send(objGeocodedLocation);
     });
   } catch (error) {
-    logger.error(error.message);
+    logger.error("An error occurred:", error.message);
     return cors(request, response, () => {
-      response.status(500).send();
+      response.status(500).send("Internal Server Error: " + error.message);
     });
   }
 });
