@@ -1,7 +1,7 @@
 <template>
     <div>
       <ul>
-        <li v-for="event in events" :key="event.id" class="eventListStyle">
+        <li v-for="event in events" :key="event.id">
             <h1>{{ event.eventName }}<br></h1>
             {{ event.eventDateTime }}<br>
             {{ event.eventDescription }}<br>
@@ -38,15 +38,3 @@ export default {
   },
 };
 </script>
-  
-  <style>
-  .eventListStyle{
-    border-color: pink;
-    border-style: solid;
-    border-width: 5px;
-    width: 400px;
-    padding: 20px;
-    margin: 20px;
-  }
-  </style>
-  

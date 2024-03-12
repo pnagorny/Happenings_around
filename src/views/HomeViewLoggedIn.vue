@@ -62,24 +62,3 @@ export default {
 
 </script>
 
-<style>
-.topBar{
-  background-color: cadetblue;
-  height: 3rem;
-  width: 100%;
-  padding: 0px;
-  margin: 0px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-.topButtons{
-  display: flex;
-  gap: 0.2rem;
-}
-body{
-  padding: 0px;
-  margin: 0px;
-}
-}
-</style>
-

@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div>
         <form @submit.prevent="handleFormSubmit">
             <input type="text" v-model="formData.street" placeholder="Adress" ref="autocomplete"><br>
             <input type="text" v-model="formData.eventName" placeholder="Event Name"><br>
@@ -8,7 +8,7 @@
             <button type="submit" variant="primary">Submit</button>
         </form>
     </div>
-    <div ref="map" class="map" style="width: 700px; height: 500px">
+    <div ref="map" style="width: 700px; height: 500px">
     </div>
 </template>
 
@@ -157,20 +157,3 @@ export default {
     
 };
 </script>
-
-<style>
-.main {
-  width: 500px;
-}
-
-.main input[type="text"],
-.main input[type="datetime-local"],
-.main textarea {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.main textarea {
-  height: 100px;
-}
-</style>

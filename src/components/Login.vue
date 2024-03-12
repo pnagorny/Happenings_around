@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="login">
+    <div>
         <h1>Login</h1>
         <form @submit.prevent="Login">
             <input type="text" placeholder="Email" v-model="email"/><br>
@@ -58,7 +58,3 @@
         }
     }
     </script>
-    
-    <style>
-    
-    </style>

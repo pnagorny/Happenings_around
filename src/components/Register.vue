@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="register">
+    <div>
         <h1>Register</h1>
         <form @submit.prevent="Register">
             <input type="text" placeholder="Email" v-model="email"/><br>
@@ -41,7 +41,3 @@
     
     }
     </script>
-    
-    <style>
-    
-    </style>
