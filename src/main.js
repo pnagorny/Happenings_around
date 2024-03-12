@@ -5,6 +5,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import VueGoogleMaps from 'vue-google-maps-community-fork';
+import './assets/tailwind.css';
 
 
 var firebaseConfig = {
