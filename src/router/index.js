@@ -14,12 +14,15 @@ const routes = [
     component: () => import('../views/AboutView.vue'),
     meta: {
       requiresAuth: true,
-    },
+    }
   },
   {
     path: '/home',
     name: 'homelogin',
-    component: () => import('../views/HomeViewLoggedIn.vue')
+    component: () => import('../views/HomeViewLoggedIn.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   }
 ]
 

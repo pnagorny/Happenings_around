@@ -4,6 +4,9 @@ import router from './router'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import VueGoogleMaps from 'vue-google-maps-community-fork';
+import './assets/tailwind.css';
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyD4U6OwKlQ5dQJt23jd8yg3S13nQyf566M",
@@ -15,6 +18,14 @@ var firebaseConfig = {
   measurementId: "G-6WN2QG091G"
 };
 
-  firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
+const Firestore = firebase.firestore;
+export const db = Firestore();
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4',
+}
+}).mount('#app')
+
+

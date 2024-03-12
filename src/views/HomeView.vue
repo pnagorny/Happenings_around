@@ -1,21 +1,33 @@
 <template>
-  <div class="topBar">
-    <div class="topButtons">
+  <h1>Hejka</h1>
+  <div>
+    <div>
       <button @click="$router.push('about')">About</button>
       <SignInParent/>
     </div>
   </div>
+  <div class="content">
+    <div class="eventList">
+      <EventList/>
+    </div>
+    <div class="googleMap">
+      <GoogleMap/>
+    </div>
+    
+</div>
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted } from 'vue';
-import firebase from 'firebase/compat/app';
+import { ref, onMounted } from 'vue';
 import SignInParent from '../components/SignInParent.vue';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
+import GoogleMap from '../components/GoogleMap.vue';
+import EventList from '../components/EventList.vue';
+import '../assets/tailwind.css'
 
 export default {
   components: {
-    SignInParent,
+    SignInParent, GoogleMap, EventList,
   },
   setup () {
     const name = ref("");
@@ -49,24 +61,6 @@ export default {
 
 </script>
 
-<style>
-.topBar{
-  background-color: cadetblue;
-  height: 3rem;
-  width: 100%;
-  padding: 0px;
-  margin: 0px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-.topButtons{
-  display: flex;
-  gap: 0.2rem;
-}
-body{
-  padding: 0px;
-  margin: 0px;
-}
-}
-</style>
+
+
 
