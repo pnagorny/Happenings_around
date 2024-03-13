@@ -39,65 +39,65 @@
   <div class="container mx-auto flex justify-between flex-wrap">
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
         <p class="text-black text-sm font-mono">Opis misji</p>
         <!-- Miejsce na obrazek -->
-        <div class="w-full h-40 bg-gray-200 flex justify-center items-center">
+        <div class="w-full h-40  flex justify-center items-center">
           <img src="ścieżka_do_obrazka" alt="Obrazek misji" class="max-h-full max-w-full">
         </div>
       </div>
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-3_color to-1_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
         <p class="text-black text-sm font-mono">Opis misji</p>
         <!-- Miejsce na obrazek -->
-        <div class="w-full h-40 bg-gray-200 flex justify-center items-center">
+        <div class="w-full h-40  flex justify-center items-center">
           <img src="ścieżka_do_obrazka" alt="Obrazek misji" class="max-h-full max-w-full">
         </div>
       </div>
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
         <p class="text-black text-sm font-mono">Opis misji</p>
         <!-- Miejsce na obrazek -->
-        <div class="w-full h-40 bg-gray-200 flex justify-center items-center">
+        <div class="w-full h-40  flex justify-center items-center">
           <img src="ścieżka_do_obrazka" alt="Obrazek misji" class="max-h-full max-w-full">
         </div>
       </div>
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-3_color to-1_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
         <p class="text-black text-sm font-mono">Opis misji</p>
         <!-- Miejsce na obrazek -->
-        <div class="w-full h-40 bg-gray-200 flex justify-center items-center">
+        <div class="w-full h-40  flex justify-center items-center">
           <img src="ścieżka_do_obrazka" alt="Obrazek misji" class="max-h-full max-w-full">
         </div>
       </div>
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
         <p class="text-black text-sm font-mono">Opis misji</p>
         <!-- Miejsce na obrazek -->
-        <div class="w-full h-40 bg-gray-200 flex justify-center items-center">
+        <div class="w-full h-40  flex justify-center items-center">
           <img src="ścieżka_do_obrazka" alt="Obrazek misji" class="max-h-full max-w-full">
         </div>
       </div>
