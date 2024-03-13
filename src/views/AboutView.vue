@@ -39,7 +39,7 @@
   <div class="container mx-auto flex justify-between flex-wrap">
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
@@ -52,7 +52,7 @@
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-gradient-to-r from-3_color to-1_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-3_color from-30% to-1_color  h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
@@ -65,7 +65,7 @@
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-1_color from-10% via-3_color  to-1_color  h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
@@ -78,7 +78,7 @@
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-gradient-to-r from-3_color to-1_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-gradient-to-r from-1_color  to-3_color  h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
@@ -91,7 +91,7 @@
     </div>
 
     <div class="w-1/5 p-4 text-center">
-      <div class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
+      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
         <!-- Opis misji -->
@@ -105,7 +105,7 @@
     
   </div>
 </section>
-<section class="w-full py-5">
+<section class="w-full pt-48 bg-gradient-to-b from-1_color to-2_color">
   <div class="container mx-auto text-center">
     <h2 class="text-black text-2xl font-mono font-bold py-5">Autorzy</h2>
   </div>
@@ -114,7 +114,7 @@
 </div>
 </section>
 
-<section class="w-full py-5">
+<section class="w-full py-5 bg-2_color">
   <div class="container mx-auto flex justify-around items-center flex-wrap">
     <!-- Autor 1 -->
     <div class="w-1/2 md:w-1/4 p-4 flex flex-col items-center">
@@ -136,12 +136,13 @@
     </div>
   </div>
 </section>
-<section class="py-10 ">
-  <div class="container mx-auto text-center">
+<section class="py-10 bg-gradient-to-b from-2_color to-1_color pt-48">
+  <div class="container mx-auto text-center ">
     <h2 class="text-3xl font-bold mb-6">Następna sekcja</h2>
     <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-8">opsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opis.</p>
   </div>
-
+</section>
+<section>
   <div class="container mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
     <!-- Case Study 1 -->
     <div ref="caseStudy1" class="case-study-container bg-3_color rounded-lg shadow-xl p-6 flex flex-col justify-between">
