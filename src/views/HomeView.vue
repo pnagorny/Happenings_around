@@ -1,21 +1,50 @@
 <template>
-  <div class="font-sans">
-    <div class="my-4">
-      <div class="flex justify-end">
-        <button class="px-4 py-2 border-2 border-purple-500 text-purple-500 font-bold hover:bg-purple-500 hover:text-white transition-colors duration-300" @click="$router.push('about') ">About</button>
-        <ModalComponentParent/>
-        <SignInParent/>
-      </div>
+  <body>
+  <header class="bg-2_color py-8  shadow-2xl">
+  <div class="container mx-auto flex justify-between items-center">
+    <!-- Logo and Happenings Around -->
+    <div class="flex justify-start items-center space-x-8">
+      <!-- Logo -->
+      <!-- Happenings Around -->
+      <a href="#" class="text-white text-2xl font-mono font-bold ">placeholder</a>
     </div>
-    <div class="flex flex-wrap md:flex-nowrap gap-4">
-      <div class="flex-1">
-        <EventList/>
-      </div>
-      <div class="flex-initial w-full md:w-1/2 lg:w-1/3">
-        <GoogleMap/>
-      </div>
+
+    <!-- Navigation and Sign Up to the right -->
+    <div class="flex justify-end items-center space-x-8">
+      <!-- Navigation -->
+      <nav class="hidden md:flex space-x-8">
+        <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Home</button>
+        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Events</a>
+        <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">About us</button>
+        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Profile</a>
+
+      </nav>
+
+      <!-- Sign Up button -->
+      <a href="#" class="text-white font-mono text-xl  bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110">Sign Up</a>
+      
     </div>
   </div>
+ 
+
+</header>
+<section>
+<h1>Hejka</h1>
+  <div>
+    <div>
+      <button @click="$router.push('about')">About</button>
+      <SignInParent/>
+    </div>
+  </div>
+  <div class="content">
+    <div class="eventList">
+      <EventList/>
+    </div>
+    <div class="googleMap">
+      <GoogleMap/>
+    </div>
+    
+</div>
 </template>
 
 <script>

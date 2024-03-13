@@ -14,9 +14,9 @@
     <div class="flex justify-end items-center space-x-8">
       <!-- Navigation -->
       <nav class="hidden md:flex space-x-8">
-        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Home</a>
+        <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Home</button>
         <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Events</a>
-        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">About us</a>
+        <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">About us</button>
         <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Profile</a>
 
       </nav>
@@ -142,29 +142,26 @@
     <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-8">opsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opisopsi opsi opsi opis.</p>
   </div>
 </section>
-<section>
-  <div class="container mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
-    <!-- Case Study 1 -->
-    <div ref="caseStudy1" class="case-study-container bg-3_color rounded-lg shadow-xl p-6 flex flex-col justify-between">
-      <h3 class="font-bold text-xl mb-3">Tytuł 1</h3>
-      <p class="text-gray-600 short-text ">Krótki opis...</p>
-      <p class="text-gray-600 full-text hidden">Pełny opis case study, wraz ze szczegółami o projekcie, procesie pracy i osiągniętych wynikach...</p>
-      <button @click="toggleText('caseStudy1')" class="mt-4 inline-block bg-2_color text-black py-2 px-4 rounded transition-colors read-more">Czytaj więcej</button>
-    </div>
-    <!-- Case Study 2 -->
-    <div ref="caseStudy2" class="case-study-container bg-3_color rounded-lg shadow-xl p-6 flex flex-col justify-between">
-      <h3 class="font-bold text-xl mb-3">Tytuł 1</h3>
-      <p class="text-gray-600 short-text">Krótki opis...</p>
-      <p class="text-gray-600 full-text hidden">Pełny opis case study, wraz ze szczegółami o projekcie, procesie pracy i osiągniętych wynikach...</p>
-      <button @click="toggleText('caseStudy2')" class="mt-4 inline-block bg-2_color text-black py-2 px-4 rounded transition-colors read-more">Czytaj więcej</button>
-    </div>
-    <!-- Case Study 3 -->
-    <div ref="caseStudy3" class="case-study-container bg-3_color rounded-lg shadow-xl p-6 flex flex-col justify-between">
-      <h3 class="font-bold text-xl mb-3">Tytuł 1</h3>
-      <p class="text-gray-600 short-text">Krótki opis...</p>
-      <p class="text-gray-600 full-text hidden">Pełny opis case study, wraz ze szczegółami o projekcie, procesie pracy i osiągniętych wynikach...</p>
-      <button @click="toggleText('caseStudy3')" class="mt-4 inline-block bg-2_color text-black py-2 px-4 rounded transition-colors read-more">Czytaj więcej</button>
-    </div>
+<section class=" justify-between items-center">
+  <div class="container mx-auto">
+      <div class="flex flex-wrap">
+        <div v-for="(item, index) in textItems" :key="index" class="text-container p-4 w-full md:w-1/2 lg:w-1/3">
+          <div v-if="item.expanded" class="border-none rounded  border- shadow-sm p-4 bg-4_color">
+            <p class="text-gray-700 text-base">{{ item.fullText }}</p>
+            <button @click="toggleText(index)" class="mt-2 bg-violet-400 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Read Less
+            </button>
+          </div>
+          <div v-else class="border-none rounded shadow-2xl p-4 bg-4_color">
+            <p class="text-white text-2xl font-bold text-center">Short Text </p>
+            <p class="text-gray-700 text-center">pizda magika </p>
+            <button @click="toggleText(index)" class="mt-2 bg-violet-400 hover:bg-violet-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Read More
+            </button>
+          </div>
+        </div>
+      </div>
+    
   </div>
 </section>
 <section class="w-full bg-1_color h-24 bg-gradient-to-t from-2_color to-1_color h-96">
@@ -177,27 +174,24 @@
 
 
 <script>
-export default {
-  name: 'ToggleText',
-  methods: {
-    toggleText(refName) {
-      const caseStudy = this.$refs[refName];
-      const fullText = caseStudy.querySelector('.full-text');
-      const shortText = caseStudy.querySelector('.short-text');
-      const readMoreButton = caseStudy.querySelector('.read-more');
-
-      if (fullText.classList.contains('hidden')) {
-        fullText.classList.remove('hidden');
-        shortText.classList.add('hidden');
-        readMoreButton.textContent = 'Czytaj mniej';
-      } else {
-        fullText.classList.add('hidden');
-        shortText.classList.remove('hidden');
-        readMoreButton.textContent = 'Czytaj więcej';
-      }
+ export default {
+    name: 'ExpandableText',
+    data() {
+      return {
+        textItems: [
+          { fullText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', expanded: false },
+          { fullText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', expanded: false },
+          { fullText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', expanded: false },
+          
+        ],
+      };
     },
-  },
-}
+    methods: {
+      toggleText(index) {
+        this.textItems[index].expanded = !this.textItems[index].expanded;
+      },
+    },
+  };
 </script>
 
 
