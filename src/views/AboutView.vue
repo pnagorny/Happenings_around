@@ -1,7 +1,7 @@
 
 <template>
   <body>
-    <header class="bg-2_color py-4 border-b border-1_color shadow-2xl">
+    <header class="bg-2_color py-8  shadow-2xl">
   <div class="container mx-auto flex justify-between items-center">
     <!-- Logo and Happenings Around -->
     <div class="flex justify-start items-center space-x-8">
@@ -27,13 +27,13 @@
     </div>
   </div>
 </header>
-<section id='mission-items' class="w-full h-24 ">
-<div class=" container mx-auto flex justify-center items-center">
-<p class="text-black text-2xl font-mono font-bold py-5">Nasza misja</p>
-</div>
-<div class=" container mx-auto flex justify-center items-center">
-<p class="text-gray-700 text-xl font-mono font-bold py-1">opis opis opisopis opis opisopis opis opisopis opis opisopis opis opisopis opis opis</p>
-</div>
+<section id='mission-items' class="w-full pt-20 bg-gradient-to-b from-2_color to-1_color">
+    <div class="container mx-auto flex justify-center items-center py-5">
+        <p class="text-black text-2xl font-mono font-bold ">Nasza misja</p>
+    </div>
+    <div class="container mx-auto flex justify-center items-center">
+        <p class="text-black text-xl font-mono font-bold py-1">opis opis opisopis opis opisopis opis opisopis opis opisopis opis opisopis opis opis</p>
+    </div>
 </section>
 <section class="w-full py-5">
   <div class="container mx-auto flex justify-between flex-wrap">
@@ -166,7 +166,7 @@
     </div>
   </div>
 </section>
-<section class="w-full py-5">
+<section class="w-full bg-1_color h-24 bg-gradient-to-t from-2_color to-1_color h-96">
   <div class="container mx-auto text-center">
 
   </div>
