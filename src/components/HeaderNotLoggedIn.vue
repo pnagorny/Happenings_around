@@ -9,28 +9,57 @@
         <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Home</button>
         <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Events</a>
         <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">About us</button>
-        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Profile</a>
-      </nav>
-      <ModalComponentParent/>
 
+      </nav>
+      
+      <SignInParent/>
     </div>
   </div>
 </header>
 </template>
 <script>
-import ModalComponentParent from './ModalComponentParent.vue';
+import { ref, onMounted } from 'vue';
+import SignInParent from '../components/SignInParent.vue';
+import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 
-  export default {
-    components: {
-      ModalComponentParent,
 
-    },
-    data() {
-      return {
-        showModal: false,
-      };
-    },
+
+
+import '../assets/tailwind.css'
+
+export default {
+  components: {
+    SignInParent
+  },
+  setup () {
+    const name = ref("");
+    const isLoggedIn = ref(false);
+
+
+    let auth;
+    onMounted(() => {
+      auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          isLoggedIn.value = true;
+        }
+        else {
+          isLoggedIn.value = false;
+        }
+      })
+    });
+
+    const Logout = () => {
+      signOut(auth)
+    };
+
+
+    return {
+      name,
+      Logout
+    }
   }
+}
 
 
 </script>

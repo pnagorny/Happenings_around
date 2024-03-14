@@ -1,20 +1,5 @@
 <template>
-  <header class="bg-2_color py-8  shadow-2xl">
-  <div class="container mx-auto flex justify-between items-center">
-    <div class="flex justify-start items-center space-x-8">
-      <a href="#" class="text-white text-2xl font-mono font-bold ">placeholder</a>
-    </div>
-    <div class="flex justify-end items-center space-x-8">
-      <nav class="hidden md:flex space-x-8">
-        <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Home</button>
-        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Events</a>
-        <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">About us</button>
-        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Profile</a>
-      </nav>
-      <ModalComponentParent/>
-    </div>
-  </div>
-</header>
+<HeaderLoggedIn/>
 <section id='mission-items' class="w-full h-96 pt-20 bg-gradient-to-b from-2_color to-1_color">
     <div class="container mx-auto flex justify-center items-center py-5">
         <p class="text-black text-2xl font-mono font-bold ">Home view</p>
@@ -198,10 +183,11 @@ import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
 import ModalComponentParentLogged from '../components/ModalComponentParentForLoggedIn.vue';
 import ModalComponentParent from '../components/ModalComponentParent.vue';
+import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
 
 export default {
   components: {
-GoogleMap, EventList, ModalComponentParent, ModalComponentParentLogged
+GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn
   },
   setup () {
     const user = firebase.auth().currentUser;
