@@ -3,6 +3,7 @@
     <div class="my-4">
       <div class="flex justify-end">
         <button class="px-4 py-2 border-2 border-purple-500 text-purple-500 font-bold hover:bg-purple-500 hover:text-white transition-colors duration-300" @click="$router.push('about') ">About</button>
+        <ModalComponentParent/>
         <SignInParent/>
       </div>
     </div>
@@ -23,11 +24,13 @@ import SignInParent from '../components/SignInParent.vue';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
+import ModalComponentParent from '../components/ModalComponentParent.vue';
+
 import '../assets/tailwind.css'
 
 export default {
   components: {
-    SignInParent, GoogleMap, EventList,
+    SignInParent, GoogleMap, EventList, ModalComponentParent
   },
   setup () {
     const name = ref("");

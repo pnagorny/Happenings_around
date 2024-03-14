@@ -1,13 +1,7 @@
 <template>
     <div>
-        <form @submit.prevent="handleFormSubmit">
-            <input type="text" v-model="formData.street" placeholder="Adress" ref="autocomplete"><br>
-            <input type="text" v-model="formData.eventName" placeholder="Event Name"><br>
-            <input type="datetime-local" v-model="formData.eventDateTime" placeholder="Event Date and Time"><br>
-            <textarea v-model="formData.eventDescription" placeholder="Event Description"></textarea><br>
-            <button type="submit" variant="primary">Submit</button>
-        </form>
-    </div>
+    
+  </div>
     <div ref="map" style="width: 700px; height: 500px">
     </div>
 </template>
