@@ -1,20 +1,21 @@
 <template>
-  <h1>Hejka</h1>
-  <div>
-    <div>
-      <button @click="$router.push('about')">About</button>
-      <SignInParent/>
+  <div class="font-sans">
+    <div class="my-4">
+      <div class="flex justify-end">
+        <button class="px-4 py-2 border-2 border-purple-500 text-purple-500 font-bold hover:bg-purple-500 hover:text-white transition-colors duration-300" @click="$router.push('about') ">About</button>
+        <ModalComponentParent/>
+        <SignInParent/>
+      </div>
+    </div>
+    <div class="flex flex-wrap md:flex-nowrap gap-4">
+      <div class="flex-1">
+        <EventList/>
+      </div>
+      <div class="flex-initial w-full md:w-1/2 lg:w-1/3">
+        <GoogleMap/>
+      </div>
     </div>
   </div>
-  <div class="content">
-    <div class="eventList">
-      <EventList/>
-    </div>
-    <div class="googleMap">
-      <GoogleMap/>
-    </div>
-    
-</div>
 </template>
 
 <script>
@@ -23,11 +24,13 @@ import SignInParent from '../components/SignInParent.vue';
 import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
+import ModalComponentParent from '../components/ModalComponentParent.vue';
+
 import '../assets/tailwind.css'
 
 export default {
   components: {
-    SignInParent, GoogleMap, EventList,
+    SignInParent, GoogleMap, EventList, ModalComponentParent
   },
   setup () {
     const name = ref("");

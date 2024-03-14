@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    "./src/views/HomeView.vue",
+    './src/**/*.{vue,js,ts,jsx,tsx}'
   ],
   theme: {
     extend: {},
