@@ -45,6 +45,9 @@
     </div>
     
 </div>
+</section>
+</body>
+  
 </template>
 
 <script>
