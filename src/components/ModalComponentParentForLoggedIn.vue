@@ -1,6 +1,6 @@
 <template>
     <!-- Existing template code -->
-    <button @click="showModal = true" class="text-white font-mono text-xl  bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110">Add Event</button>
+    <button @click="showModal = true" class="rounded-md border-0 bg-violet-500 px-12 py-2 text-base text-white shadow-lg shadow-violet-300 transition hover:bg-violet-600 hover:shadow-violet-400 dark:shadow-violet-900">Add Event</button>
     <ModalComponent v-model:isVisible="showModal">
       <EventForm/>
     </ModalComponent>

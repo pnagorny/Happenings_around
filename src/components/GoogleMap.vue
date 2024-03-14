@@ -2,7 +2,7 @@
     <div>
     
   </div>
-    <div ref="map" style="width: 700px; height: 500px">
+    <div ref="map" style="width: 800px; height: 700px" class="rounded-lg">
     </div>
 </template>
 
