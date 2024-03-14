@@ -7,7 +7,10 @@
 
     </div>
     <div class="container mx-auto flex justify-center items-center">
-        <p class="text-black text-xl font-mono font-bold py-1">Not Looged In</p>
+      
+    <p v-if="user">Jesteś zalogowany jako {{ user.email }}</p>
+    <p v-else>Nie jesteś zalogowany.</p>
+  
     </div>
 </section>
 
