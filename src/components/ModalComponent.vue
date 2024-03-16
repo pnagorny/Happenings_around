@@ -1,8 +1,12 @@
 <template>
-    <div v-if="isVisible" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" @click.self="closeModal">
-      <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3 shadow-lg rounded-md bg-white">
-        <div class="mt-3 text-center">
-          <span class="top-0 right-0 cursor-pointer text-gray-400 hover:text-gray-500 float-right text-2xl leading-none px-3 py-1" @click="closeModal">&times;</span>
+    <div v-if="isVisible" class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg flex justify-center w-full items-center z-50" @click.self="closeModal">
+      <div class="z-50 p-5 border md:w-2/3  xl:w-1/3 shadow-2xl rounded-md bg-white">
+        <div class="z-50  text-center ">
+          <button class="float-right mb-3 bg-gray-200 hover:bg-gray-300 rounded-full p-2" @click="closeModal">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4  text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
           <slot></slot> <!-- This is where your form will be injected -->
         </div>
       </div>
@@ -19,8 +23,4 @@
     },
   }
   </script>
-  
-  <style>
-  /* Add any additional styles here */
-  </style>
   

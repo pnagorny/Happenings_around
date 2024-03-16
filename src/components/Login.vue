@@ -1,11 +1,17 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div>
-        <h1>Login</h1>
+        <div class="text-center text-2xl  pb-5">
+            <h1>Zaloguj się</h1>
+        </div>
+        
         <form @submit.prevent="Login">
-            <input type="text" placeholder="Email" v-model="email"/><br>
-            <input type="text" placeholder="Password" v-model="password"/><br><br>
-            <input type="submit" value="Login">
+            <input type="text" placeholder="Email" v-model="email" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"/><br>
+            <input type="password" placeholder="Password" v-model="password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"/><br><br>
+            <div class="flex justify-between items-baseline">
+            <button type="submit" class=" bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600 ">Zaloguj się</button><br>
+            <button class="text-sm text-purple-500 hover:underline" @click.prevent="resetPassword">Reset password</button>
+            </div>
         </form>
     </div>
     </template>
@@ -13,7 +19,8 @@
     <script>
     import {ref} from 'vue';
     import {useRouter} from 'vue-router';
-    import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+    import { auth } from 'firebase/auth';
+    import {getAuth, signInWithEmailAndPassword, sendPasswordResetEmail} from 'firebase/auth';
     
     export default{
         setup() {
@@ -48,11 +55,28 @@
                                 break;
                         }
                     });
-            }
+            };
+            const resetPassword = async () => {
+                const auth = getAuth()
+                sendPasswordResetEmail(auth, email.value)
+                
+                .then(() => {
+
+                    window.alert("Instructions for resetting the password have been sent")  
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    window.alert('Action failed',errorCode,errorMessage)
+                })
+    };
+            
+
             return{
                 Login,
                 email,
-                password
+                password,
+                resetPassword
             }
     
         }
