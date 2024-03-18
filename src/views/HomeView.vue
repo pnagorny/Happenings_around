@@ -206,7 +206,7 @@ export default {
       }
     },
   },
-  setup () {
+  setup() {
     const name = ref("");
     const isLoggedIn = ref(false);
 
