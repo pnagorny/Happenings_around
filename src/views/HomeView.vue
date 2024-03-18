@@ -1,6 +1,7 @@
 <template>
   <body>
-    <HeaderNotLoggedIn/>
+    <HeaderLoggedIn v-if="isLoggedIn" />
+    <HeaderNotLoggedIn v-else />
 <section class="w-full pt-20 bg-gradient-to-b from-2_color to-1_color mb-24">
     <div class="container mx-auto flex justify-center items-center py-5">
         <p class="text-black text-2xl font-mono font-bold ">Home view</p>
@@ -190,12 +191,13 @@ import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
 import RegisterParent from '../components/RegisterParent.vue';
 import HeaderNotLoggedIn from '../components/HeaderNotLoggedIn.vue';
+import HeaderLoggedIn from '@/components/HeaderLoggedIn.vue';
 
 import '../assets/tailwind.css'
 
 export default {
   components: {
-    GoogleMap, EventList, RegisterParent, HeaderNotLoggedIn
+    GoogleMap, EventList, RegisterParent, HeaderNotLoggedIn, HeaderLoggedIn
   },
   methods: {
     handleZoomToEvent(geoPoint) {
@@ -213,12 +215,7 @@ export default {
     onMounted(() => {
       auth = getAuth();
       onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isLoggedIn.value = true;
-        }
-        else {
-          isLoggedIn.value = false;
-        }
+        isLoggedIn.value = !!user;
       })
     });
 
@@ -229,7 +226,8 @@ export default {
 
     return {
       name,
-      Logout
+      Logout,
+      isLoggedIn
     }
   }
 }

@@ -1,5 +1,6 @@
 <template>
-<HeaderLoggedIn/>
+<HeaderLoggedIn v-if="isLoggedIn" />
+    <HeaderNotLoggedIn v-else />
 <section id='mission-items' class="w-full h-96 pt-20 bg-gradient-to-b from-2_color to-1_color">
     <div class="container mx-auto flex justify-center items-center py-5">
         <p class="text-black text-2xl font-mono font-bold ">Home view</p>
@@ -181,10 +182,13 @@ import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
 import ModalComponentParentLogged from '../components/ModalComponentParentForLoggedIn.vue';
 import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { ref, onMounted } from 'vue';
+import HeaderNotLoggedIn from '@/components/HeaderNotLoggedIn.vue';
 
 export default {
   components: {
-GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn
+GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn, HeaderNotLoggedIn
   },
   methods: {
     handleZoomToEvent(geoPoint) {
@@ -192,7 +196,26 @@ GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn
         this.$refs.googleMap.zoomToLocation(geoPoint);
       }
     },
+
   },
+  setup () {
+    const name = ref("");
+    const isLoggedIn = ref(false);
+
+
+    let auth;
+    onMounted(() => {
+      auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        isLoggedIn.value = !!user;
+      })
+    });
+
+    return {
+      name,
+      isLoggedIn
+    }
+  }
 }
 
 </script>

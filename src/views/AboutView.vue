@@ -1,6 +1,7 @@
 <template>
   <body>
-    <HeaderNotLoggedIn/>
+    <HeaderLoggedIn v-if="isLoggedIn" />
+    <HeaderNotLoggedIn v-else />
 <section id='mission-items' class="w-full pt-20 bg-gradient-to-b from-2_color to-1_color">
     <div class="container mx-auto flex justify-center items-center py-5">
         <p class="text-black text-2xl font-mono font-bold ">Nasza misja</p>
@@ -281,46 +282,29 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import SignInParent from '../components/SignInParent.vue';
-import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
+import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
 import HeaderNotLoggedIn from '../components/HeaderNotLoggedIn.vue';
-
-
-
-import '../assets/tailwind.css'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import '../assets/tailwind.css';
 
 export default {
   components: {
+    HeaderLoggedIn,
     HeaderNotLoggedIn
   },
   setup () {
-    const name = ref("");
     const isLoggedIn = ref(false);
 
-
-    let auth;
     onMounted(() => {
-      auth = getAuth();
+      const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
-        if (user) {
-          isLoggedIn.value = true;
-        }
-        else {
-          isLoggedIn.value = false;
-        }
-      })
+        isLoggedIn.value = !!user;
+      });
     });
 
-    const Logout = () => {
-      signOut(auth)
-    };
-
-
     return {
-      name,
-      Logout
-    }
+      isLoggedIn
+    };
   }
 }
-
 </script>
