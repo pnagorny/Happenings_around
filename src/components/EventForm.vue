@@ -43,6 +43,7 @@
         if (data !== "No Results") {
           // Handle the successful submission case
           console.log("Submission successful", data);
+          this.$emit('close-modal');
         }
         // Reset the form data
         this.formData = {
