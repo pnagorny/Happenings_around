@@ -17,7 +17,7 @@
 <section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color ">
   <div class="md:w-1/2  flex justify-center items-center ">
     <div class="eventList">
-      <EventList/>
+      <EventList @zoomToEvent="handleZoomToEvent"/>
     </div>
 </div>
 
@@ -196,6 +196,13 @@ import '../assets/tailwind.css'
 export default {
   components: {
     GoogleMap, EventList, RegisterParent, HeaderNotLoggedIn
+  },
+  methods: {
+    handleZoomToEvent(geoPoint) {
+      if (this.$refs.googleMap) {
+        this.$refs.googleMap.zoomToLocation(geoPoint);
+      }
+    },
   },
   setup () {
     const name = ref("");

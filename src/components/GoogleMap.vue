@@ -40,7 +40,6 @@ export default {
   mounted() {
     this.loadGoogleMapsScript().then(() => {
       this.initMap();
-      this.initAutocomplete();
     });
   },
   methods: {
