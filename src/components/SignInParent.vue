@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="text-white font-mono text-xl  bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110" @click="showAuthModal">
-      Join Us
+      Zaloguj się
     </button>
     <AuthModal ref="authModal" />
   </div>
@@ -21,4 +21,4 @@ export default {
     }
   }
 };
-</script>./SignInModal.vue
+</script>

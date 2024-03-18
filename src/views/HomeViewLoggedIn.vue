@@ -8,7 +8,7 @@
     <div class="container mx-auto flex justify-center items-center">
            
     <p v-if="user">Jesteś zalogowany jako {{ user.email }}</p>
-    <p v-else>Nie jesteś zalogowany.</p>
+    <p v-else>Jesteś zalogowany.</p>
     </div>
 </section>
 <section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color ">
@@ -177,47 +177,15 @@
 </template>
 
 <script>
-import { ref, onBeforeMount } from 'vue';
-import firebase from 'firebase/compat/app';
-
-import {useRouter} from 'vue-router';
 import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
 import ModalComponentParentLogged from '../components/ModalComponentParentForLoggedIn.vue';
-import ModalComponentParent from '../components/ModalComponentParent.vue';
 import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
 
 export default {
   components: {
 GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn
   },
-  setup () {
-    const user = firebase.auth().currentUser;
-
-    const name = ref("");
-    const route = useRouter();
-
-    onBeforeMount(() =>{
-      if (user) {
-        name.value = user.email.split('@')[0];
-      }
-    });
-    const Logout = () => {
-      firebase
-        .auth()
-        .signOut()
-        .then((data) => {
-          window.alert("Logged out!")
-          route.push('/')
-        })
-        .catch(err => alert(err.message));
-    }
-
-    return {
-      name,
-      Logout
-    }
-  }
 }
 
 </script>

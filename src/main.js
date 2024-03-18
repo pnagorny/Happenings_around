@@ -6,6 +6,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import VueGoogleMaps from 'vue-google-maps-community-fork';
 import './assets/tailwind.css';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 var firebaseConfig = {
@@ -22,10 +23,25 @@ firebase.initializeApp(firebaseConfig)
 const Firestore = firebase.firestore;
 export const db = Firestore();
 
-createApp(App).use(router).use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4',
-}
-}).mount('#app')
+let app;
 
+firebase.auth().onAuthStateChanged((user) => {
+  if (!app) {
+    app = createApp(App)
+      .use(router)
+      .use(VueGoogleMaps, {
+        load: {
+          key: 'YOUR_GOOGLE_MAPS_API_KEY',
+        }
+      })
+      .mount('#app');
+  }
 
+  if (user) {
+    // User is logged in, you can store the user details in your app's state
+    console.log('User is logged in:', user);
+  } else {
+    // No user is logged in, handle accordingly
+    console.log('No user is logged in');
+  }
+});

@@ -23,7 +23,12 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-  }
+  },
+  {
+    path: '/events',
+    name: 'events',
+    component: () => import('../views/EventList.vue'),
+  },
   
 ]
 
@@ -33,16 +38,18 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (getAuth().currentUser) {
-      next();
-    }
-    else {
-      alert("you dont have access!");
-      next("/")
-    }
-  }
-  else {
+  const isAuthenticated = getAuth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (!isAuthenticated && requiresAuth) {
+    // If the user is not authenticated and the route requires authentication
+    alert("You don't have access!");
+    next('/');
+  } else if (isAuthenticated && to.path === '/') {
+    // If the user is authenticated and tries to access '/'
+    next('/home');
+  } else {
+    // Proceed as normal if none of the above conditions are met
     next();
   }
 });

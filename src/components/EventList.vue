@@ -8,7 +8,7 @@
       </a>
  </div>
  <div class="flow-root">
-      <ul role="list" v-for="event in events" :key="event.id" class=" divide-y divide-gray-200 dark:divide-gray-700">
+  <ul role="list" v-for="event in limitedEvents" :key="event.id" class=" divide-y divide-gray-200 dark:divide-gray-700">
           <li class="py-4 sm:py-5 rounded hover:bg-gray-600">
               <div class="flex items-center space-x-4">
                   <div class="flex-1 min-w-0">
@@ -35,29 +35,46 @@
   </template>
   
   <script>
-import { db } from "../main.js";
-
-export default {
-  name: "EventList",
-  data() {
-    return {
-      events: [],
-    };
-  },
-  async created() {
-    const snapshot = await db.collection("locations").get();
-    this.events = snapshot.docs.map(doc => {
-      const data = doc.data();
-      data.eventDateTime = this.formatDate(data.eventDateTime);
-      return { id: doc.id, ...data };
-    });
-  },
-  methods: {
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      const formattedDate = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} ${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}r.`;
-      return formattedDate;
+  import { db } from "../main.js";
+  
+  export default {
+    name: "EventList",
+    data() {
+      return {
+        events: [],
+        unsubscribe: null, // Store the unsubscribe function for the listener
+      };
     },
-  },
-};
-</script>
+    computed: {
+      limitedEvents() {
+        return this.events.slice(0, 6);
+      }
+    },
+    created() {
+      // Set up a real-time listener
+      this.unsubscribe = db.collection("locations").onSnapshot(snapshot => {
+        this.events = snapshot.docs.map(doc => {
+          const data = doc.data();
+          data.eventDateTime = this.formatDate(data.eventDateTime);
+          return { id: doc.id, ...data };
+        });
+      }, error => {
+        console.error("Error fetching events:", error);
+      });
+    },
+    beforeUnmount() {
+      // Unsubscribe from the listener when the component is destroyed
+      if (this.unsubscribe) {
+        this.unsubscribe();
+      }
+    },
+    methods: {
+      formatDate(dateString) {
+        const date = new Date(dateString);
+        const formattedDate = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} ${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}r.`;
+        return formattedDate;
+      },
+    },
+  };
+  </script>
+  
