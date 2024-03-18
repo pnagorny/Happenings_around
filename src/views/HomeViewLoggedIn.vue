@@ -7,8 +7,8 @@
     </div>
     <div class="container mx-auto flex justify-center items-center">
            
-    <p v-if="user">Jesteś zalogowany jako {{ user.email }}</p>
-    <p v-else>Jesteś zalogowany.</p>
+    <p v-if="isLoggedIn">Jesteś zalogowany</p>
+    <p v-else>Nie Jesteś zalogowany.</p>
     </div>
 </section>
 <section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color ">

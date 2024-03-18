@@ -8,9 +8,9 @@
     <div class="flex justify-end items-center">
       <nav class="hidden md:flex">
         <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Strona Główna</button>
-        <a href="#" @click="$router.push('/events')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Wydarzenia</a>
+        <button @click="$router.push('/events')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Wydarzenia</button>
         <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">O Nas</button>
-        <a href="#" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 mx-5 transition-all">Profil</a>
+        <button @click="$router.push('/profile')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 mx-5 transition-all">Profil</button>
       </nav>
       <ModalComponentParent/>
       <button @click="Logout" class="text-white font-mono text-xl bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110 mx-10">Wyloguj się</button>
