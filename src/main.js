@@ -1,6 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import {createApp} from 'vue';
+import App from './App.vue';
+import router from './router';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -19,9 +19,9 @@ var firebaseConfig = {
   measurementId: "G-6WN2QG091G"
 };
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
 const Firestore = firebase.firestore;
-export const db = Firestore();
+export const db = Firestore(); // eslint-disable-line
 
 let app;
 
