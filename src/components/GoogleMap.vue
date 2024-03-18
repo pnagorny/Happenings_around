@@ -117,22 +117,6 @@ export default {
       this.formData.evendDateTime = "";
       this.formData.eventDescription = "";
     },
-    initAutocomplete() {
-      const input = this.$refs.autocomplete;
-      if (!input) return;
-      // eslint-disable-next-line no-undef
-      const autocomplete = new google.maps.places.Autocomplete(input);
-      autocomplete.bindTo('bounds', this.map);
-
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (!place.geometry) {
-          console.error("No details available for input: '" + place.name + "'");
-          return;
-        }
-        this.formData.street = place.formatted_address || place.name;
-      });
-    },
     addMarkers() {
   this.markers.forEach((marker, index) => {
     if (!marker._marker) {  // Check if the marker hasn't been added to the map yet
