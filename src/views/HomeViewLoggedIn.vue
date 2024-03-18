@@ -14,14 +14,14 @@
 <section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color ">
   <div class="md:w-1/2  flex justify-center items-center ">
     <div class="eventList">
-      <EventList/>
+      <EventList @zoomToEvent="handleZoomToEvent"/>
     </div>
 </div>
 
 
 
   <div class="md:w-1/2 mt-0 flex justify-center ">
-      <GoogleMap/>
+      <GoogleMap ref="googleMap"/>
     </div>
 </section>
 <section class="w-full bg-gradient-to-b from-2_color to-1_color mx-auto px-8 py-36 text-center sm:px-12">
@@ -185,6 +185,13 @@ import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
 export default {
   components: {
 GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn
+  },
+  methods: {
+    handleZoomToEvent(geoPoint) {
+      if (this.$refs.googleMap) {
+        this.$refs.googleMap.zoomToLocation(geoPoint);
+      }
+    },
   },
 }
 

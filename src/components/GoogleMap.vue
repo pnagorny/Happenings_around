@@ -147,6 +147,13 @@ export default {
   });
   console.log("Markers added to the map:", this.markers);
 },
+zoomToLocation(geoPoint) {
+      if (!this.map || !geoPoint) return;
+      // eslint-disable-next-line no-undef
+      const center = new google.maps.LatLng(geoPoint.latitude, geoPoint.longitude);
+      this.map.setZoom(15); // Or any other zoom level you prefer
+      this.map.panTo(center);
+    },
     },
     
 };

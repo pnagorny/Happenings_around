@@ -9,7 +9,7 @@
  </div>
  <div class="flow-root">
   <ul role="list" v-for="event in limitedEvents" :key="event.id" class=" divide-y divide-gray-200 dark:divide-gray-700">
-          <li class="py-4 sm:py-5 rounded hover:bg-gray-600">
+          <li class="py-4 sm:py-5 rounded hover:bg-gray-600" @click="zoomToEvent(event)">
               <div class="flex items-center space-x-4">
                   <div class="flex-1 min-w-0">
                       <p class="text-xl font-medium text-gray-900 truncate dark:text-white">
@@ -47,7 +47,7 @@
     },
     computed: {
       limitedEvents() {
-        return this.events.slice(0, 6);
+        return this.events.slice(0, 20);
       }
     },
     created() {
@@ -74,6 +74,9 @@
         const formattedDate = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} ${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}r.`;
         return formattedDate;
       },
+      zoomToEvent(event) {
+      this.$emit('zoomToEvent', event.geoPoint);
+    },
     },
   };
   </script>
