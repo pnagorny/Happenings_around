@@ -5,11 +5,11 @@
         <span class="text-violet-500 text-2xl">Happenings</span>
         <span class="text-white text-2xl">Around</span>
       </div>
-    <div class="flex justify-end items-center space-x-8">
-      <nav class="hidden md:flex space-x-8">
+    <div class="flex justify-end items-center">
+      <nav class="hidden md:flex">
         <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Strona Główna</button>
         <a href="#" @click="$router.push('/events')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Wydarzenia</a>
-        <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">O Nas</button>
+        <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all mx-5">O Nas</button>
 
       </nav>
       

@@ -108,7 +108,6 @@ export default {
     };
     this.markers.push(obj);
     this.addMarkers();
-    window.location.reload();
   }
 
       this.formData.street = "";
@@ -138,6 +137,14 @@ zoomToLocation(geoPoint) {
       this.map.panTo(center);
     },
     },
-    
+    watch: {
+    markers: {
+      handler(newMarkers) {
+        this.addMarkers(); // This will add markers to the map whenever the markers array changes
+      },
+      deep: true, // Watches for changes in nested properties inside the array
+      immediate: true, // Immediately invokes the handler with the current value of the expression
+    },
+  },    
 };
 </script>
