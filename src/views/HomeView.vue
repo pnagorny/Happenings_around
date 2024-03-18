@@ -17,12 +17,12 @@
 
 <section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color ">
   <div class="md:w-1/2  flex justify-center items-center ">
-    <div class="eventList">
+    <div class="container eventList md:ml-20">
       <EventList @zoomToEvent="handleZoomToEvent"/>
     </div>
 </div>
 
-      <div class="md:w-1/2 mt-0 flex justify-center">
+      <div class="container md:w-1/2 mt-0 flex justify-center">
         <GoogleMap />
       </div>
     </section>

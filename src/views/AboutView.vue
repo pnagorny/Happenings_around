@@ -12,9 +12,9 @@
     </div>
 </section>
 <section class="w-full py-5">
-  <div class="container mx-auto flex justify-between flex-wrap">
+  <div class="container mx-auto md:flex justify-between flex-wrap">
 
-    <div class="w-1/5 p-4 text-center">
+    <div class="md:w-1/5 p-4 text-center">
       <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
         <!-- Tytuł misji -->
         <p class="text-black text-xl font-mono">Tytuł misji</p>
@@ -27,9 +27,9 @@
       </div>
     </div>
 
-        <div class="w-1/5 p-4 text-center">
+        <div class="md:w-1/5 p-4 text-center">
           <div
-            class="bg-gradient-to-r from-3_color from-30% to-1_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
           >
             <!-- Tytuł misji -->
             <p class="text-black text-xl font-mono">Tytuł misji</p>
@@ -46,9 +46,9 @@
           </div>
         </div>
 
-        <div class="w-1/5 p-4 text-center">
+        <div class="md:w-1/5 p-4 text-center">
           <div
-            class="bg-gradient-to-r from-1_color from-10% via-3_color to-1_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
           >
             <!-- Tytuł misji -->
             <p class="text-black text-xl font-mono">Tytuł misji</p>
@@ -65,9 +65,9 @@
           </div>
         </div>
 
-        <div class="w-1/5 p-4 text-center">
+        <div class="md:w-1/5 p-4 text-center">
           <div
-            class="bg-gradient-to-r from-1_color to-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
           >
             <!-- Tytuł misji -->
             <p class="text-black text-xl font-mono">Tytuł misji</p>
@@ -84,7 +84,7 @@
           </div>
         </div>
 
-        <div class="w-1/5 p-4 text-center">
+        <div class="md:w-1/5 p-4 text-center">
           <div
             class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
           >
@@ -120,7 +120,7 @@
       <div class="container mx-auto flex justify-around items-center flex-wrap">
         <!-- Autor 1 -->
         <div class="w-1/2 md:w-1/4 p-4 flex flex-col items-center">
-          <div class="w-64 h-64 mb-3 rounded-full overflow-hidden">
+          <div class="md:w-64 md:h-64 mb-3 rounded-full overflow-hidden">
             <img
               src="../assets/images/photo1.jpg"
               alt="Imię i nazwisko autora 1"
@@ -132,7 +132,7 @@
         </div>
         <!-- Autor 2 -->
         <div class="w-1/2 md:w-1/4 p-4 flex flex-col items-center">
-          <div class="w-64 h-64 mb-3 rounded-full overflow-hidden">
+          <div class="md:w-64 md:h-64 mb-3 rounded-full overflow-hidden">
             <img
               src="../assets/images/photo2.jpg"
               alt="Imię i nazwisko autora 2"

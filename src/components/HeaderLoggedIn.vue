@@ -1,20 +1,27 @@
 <template>
     <header class="bg-2_color py-8  shadow-2xl">
-  <div class="container mx-auto flex justify-between items-center">
+  <div class="container mx-auto md:flex justify-between items-center">
     <div class="w-full text-lg font-extrabold md:w-fit md:text-left">
-        <span class="text-violet-500 text-2xl">Happenings</span>
-        <span class="text-white text-2xl">Around</span>
+        <span class="text-violet-500 text-2xl ml-14 md:ml-0">Happenings</span>
+        <span class="text-white text-2xl ">Around</span>
+        <button @click="MenuOpen()" class="md:hidden text-white">
+          <svg class="ml-16  w-8 h-8 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
       </div>
-    <div class="flex justify-end items-center">
-      <nav class="hidden md:flex">
-        <button @click="$router.push('/')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Strona Główna</button>
-        <button @click="$router.push('/events')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">Wydarzenia</button>
-        <button @click="$router.push('about')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">O Nas</button>
-        <button @click="$router.push('/profile')" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 mx-5 transition-all">Profil</button>
-      </nav>
-      <ModalComponentParent/>
-      <button @click="Logout" class="text-white font-mono text-xl bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110 mx-10">Wyloguj się</button>
-
+    <div class="md:flex md:justify-end md:items-center">
+      
+      <ul class="md:flex md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gradient-to-t from-1_color from-60% to-2_color   md:bg-gradient-to-t from-2_color from-60% to-2_color md:w-auto w-full top-20 duration-700 ease-in" 
+        :class="[open ? 'right-0' : 'right-[100%]']">
+        <li class="md:mx-4 md:my-0 my-6" v-for="(link, index) in Links" :key="index">
+          <button @click="$router.push(link.route)" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">{{link.name}}</button>
+        </li>
+        <li>
+          <ModalComponentParent/>
+        </li>
+        <li>
+          <button @click="Logout" class="mt-6 md:mt-0 text-white font-mono text-xl bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110 md:mx-10">Wyloguj się</button>
+        </li>
+        </ul>
     </div>
   </div>
 </header>
@@ -35,12 +42,22 @@ import {useRouter} from 'vue-router';
 
     const name = ref("");
     const route = useRouter();
-
+    const open = ref(false);
+    const Links = ref([
+      {name: "Strona główna", route: "/"},
+      {name: 'Wydarzenia', route: "/events"},
+      {name: 'O nas', route: "about"},
+      {name: 'Profil', route: "/profile"},
+    ]);
     onBeforeMount(() =>{
       if (user) {
         name.value = user.email.split('@')[0];
       }
+
     });
+    const MenuOpen = () => {
+      open.value = !open.value;
+    };
     const Logout = () => {
       firebase
         .auth()
@@ -54,7 +71,10 @@ import {useRouter} from 'vue-router';
     return {
         showModal: false,
         name,
-        Logout
+        Logout,
+        Links,
+        open,
+        MenuOpen,
       };
     },
     }
