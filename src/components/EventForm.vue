@@ -32,7 +32,6 @@
   },
     methods: {
       initAutocomplete() {
-      // Ensure the Google Maps script is loaded
       if (window.google && window.google.maps) {
         // eslint-disable-next-line no-undef
         this.autocomplete = new google.maps.places.Autocomplete(this.$refs.autocomplete, { types: ['geocode'] });
