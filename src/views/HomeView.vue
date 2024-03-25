@@ -23,7 +23,7 @@
 </div>
 
       <div class="container md:w-1/2 mt-0 flex justify-center">
-        <GoogleMap />
+        <GoogleMap ref="googleMap"/>
       </div>
     </section>
 
