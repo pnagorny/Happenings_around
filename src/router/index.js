@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import {getAuth} from 'firebase/auth'
+import {createRouter, createWebHistory} from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import {getAuth} from 'firebase/auth';
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/about',
@@ -26,13 +26,18 @@ const routes = [
     name: 'events',
     component: () => import('../views/EventListFull.vue'),
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../views/UserProfileView.vue'),
+  },
   
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = getAuth().currentUser;
@@ -51,4 +56,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export default router
+export default router;
