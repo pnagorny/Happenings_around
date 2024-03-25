@@ -194,10 +194,12 @@ GoogleMap, EventList,  ModalComponentParentLogged, HeaderLoggedIn, HeaderNotLogg
   },
   methods: {
     handleZoomToEvent(geoPoint) {
-      if (this.$refs.googleMap) {
-        this.$refs.googleMap.zoomToLocation(geoPoint);
-      }
-    },
+  if (this.$refs.googleMap && typeof this.$refs.googleMap.zoomToLocation === 'function') {
+    this.$refs.googleMap.zoomToLocation(geoPoint);
+  } else {
+    console.error('GoogleMap component is not properly referenced.');
+  }
+},
 
   },
   setup () {

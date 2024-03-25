@@ -186,7 +186,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth';
+import {getAuth, onAuthStateChanged} from 'firebase/auth';
 import GoogleMap from '../components/GoogleMap.vue';
 import EventList from '../components/EventList.vue';
 import RegisterParent from '../components/RegisterParent.vue';
@@ -197,14 +197,18 @@ import "../assets/tailwind.css";
 
 export default {
   components: {
-    GoogleMap, EventList, RegisterParent, HeaderNotLoggedIn, HeaderLoggedIn
+GoogleMap, EventList, HeaderLoggedIn, HeaderNotLoggedIn
   },
   methods: {
     handleZoomToEvent(geoPoint) {
-      if (this.$refs.googleMap) {
-        this.$refs.googleMap.zoomToLocation(geoPoint);
-      }
-    },
+   console.log(this.$refs); // Check what refs are available
+  if (this.$refs.googleMap) {
+    this.$refs.googleMap.zoomToLocation(geoPoint);
+  } else {
+    console.error('GoogleMap component is not properly referenced.');
+  }
+},
+
   },
   setup() {
     const name = ref("");
@@ -217,14 +221,8 @@ export default {
         isLoggedIn.value = !!user;
       })
     });
-
-    const Logout = () => {
-      signOut(auth);
-    };
-
     return {
       name,
-      Logout,
       isLoggedIn
     }
   }
