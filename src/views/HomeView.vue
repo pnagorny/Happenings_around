@@ -19,7 +19,7 @@
     </div>
 </section>
 
-<section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color" id="event-list-main">
+<section class="flex flex-col md:flex-row bg-gradient-to-b from-1_color to-2_color">
   <div class="md:w-1/2  flex justify-center items-center ">
     <div class="container eventList md:ml-20">
       <EventList @zoomToEvent="handleZoomToEvent"/>
@@ -48,12 +48,14 @@
         class="mx-auto flex w-fit flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
       >
         <RegisterParent />
-        <button
-          @click="$router.push('about')"
-          class="rounded-md border-0 bg-slate-100 px-12 py-2 text-base text-dark-900 shadow-lg shadow-slate-100 transition hover:bg-white hover:shadow-slate-200 dark:shadow-slate-600"
-        >
-          Learn more
-        </button>
+        
+        <router-link
+                class="rounded-md border-0 bg-slate-100 px-12 py-2 text-base text-dark-900 shadow-lg shadow-slate-100 transition hover:bg-white hover:shadow-slate-200 dark:shadow-slate-600"
+                to="/about"
+                @click.native="navigateToAboutSection"
+              >
+                Learn more
+              </router-link>
       </div>
     </section>
     <FooterLoggedIn v-if="isLoggedIn" />
@@ -76,7 +78,7 @@ import "../assets/tailwind.css";
 
 export default {
   components: {
-GoogleMap, EventList, HeaderLoggedIn, HeaderNotLoggedIn, FooterLoggedIn, FooterNotLoggedIn
+GoogleMap, EventList, HeaderLoggedIn, HeaderNotLoggedIn, FooterLoggedIn, FooterNotLoggedIn, RegisterParent
   },
   methods: {
     handleZoomToEvent(geoPoint) {
@@ -87,56 +89,16 @@ GoogleMap, EventList, HeaderLoggedIn, HeaderNotLoggedIn, FooterLoggedIn, FooterN
     console.error('GoogleMap component is not properly referenced.');
   }
 },
-navigateToAuthorsSection() {
-    this.$router.push({ name: 'about' }).then(() => {
-      this.$nextTick(() => {
-        const authorsSection = document.getElementById('authors-section-id');
-        if (authorsSection) {
-          authorsSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  },
-  navigateToMissionSection() {
-    this.$router.push({ name: 'about' }).then(() => {
-      this.$nextTick(() => {
-        const missionSection = document.getElementById('mission-items');
-        if (missionSection) {
-          missionSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  },
-  navigateToMapSection() {
-    this.$router.push({ name: 'home' }).then(() => {
-      this.$nextTick(() => {
-        const mapSection = document.getElementById('map');
-        if (mapSection) {
-          mapSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  },
-  navigateToEventSection() {
-    this.$router.push({ name: 'events' }).then(() => {
-      this.$nextTick(() => {
-        const eventSection = document.getElementById('event-list-main');
-        if (eventSection) {
-          eventSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  },
-  navigateToHomeSection() {
-    this.$router.push({ name: 'home' }).then(() => {
-      this.$nextTick(() => {
-        const eventSection = document.getElementById('');
-        if (eventSection) {
-          eventSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  },
+navigateToAboutSection() {
+        this.$router.push({ name: 'about' }).then(() => {
+          this.$nextTick(() => {
+            const aboutSection = document.getElementById('about-section');
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
 
   },
   setup() {
