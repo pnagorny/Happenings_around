@@ -1,7 +1,7 @@
 <template>
     <HeaderLoggedIn v-if="isLoggedIn" />
         <HeaderNotLoggedIn v-else />
-        <section id='mission-items' class="w-full h-96 pt-20 bg-gradient-to-b from-2_color to-1_color">
+  <section id='event-list-main' class="w-full h-96 pt-20 bg-gradient-to-b from-2_color to-1_color">
     <div class="container mx-auto flex justify-center items-center py-5">
         <p class="text-black text-2xl font-mono font-bold ">EVENT PAGE</p>
 
@@ -12,12 +12,12 @@
     <p v-else> Nie jesteś zalogowany.</p>
     </div>
 </section>
-<FooterLoggedIn v-if="isLoggedIn" />
+    <FooterLoggedIn v-if="isLoggedIn" />
     <FooterNotLoggedIn v-else />
     </template>
     
     <script>
-   import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
+import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { ref, onMounted } from 'vue';
 import HeaderNotLoggedIn from '@/components/HeaderNotLoggedIn.vue';
