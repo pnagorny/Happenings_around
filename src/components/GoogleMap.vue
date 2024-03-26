@@ -2,7 +2,7 @@
     <div>
     
   </div>
-    <div ref="map" style="width: 45rem; height: 47rem" class="rounded-lg md:mx-0 mx-4">
+    <div ref="map" style="width: 45rem; height: 47rem" class="rounded-lg md:mx-0 mx-4 shadow-2xl">
     </div>
 </template>
 

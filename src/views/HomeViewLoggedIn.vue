@@ -38,12 +38,12 @@
       options.
     </p>
     <div
-      class="mx-auto flex w-fit flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
+      class="mx-auto flex w-fit flex-col space-y-4 sm:flex-row sm:space-y-0"
     >
-      <ModalComponentParentLogged />
+      <ModalComponentParentLogged class="mx-6" />
       <button
         @click="$router.push('about')"
-        class="rounded-md border-0 bg-slate-100 px-12 py-2 text-base text-dark-900 shadow-lg shadow-slate-100 transition hover:bg-white hover:shadow-slate-200 dark:shadow-slate-600"
+        class="rounded-md border-0 bg-slate-100 px-12 py-2 mx-6 text-base text-dark-900 shadow-lg shadow-slate-100 transition hover:bg-white hover:shadow-slate-200 dark:shadow-slate-600"
       >
         Learn more
       </button>
