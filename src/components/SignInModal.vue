@@ -41,7 +41,10 @@ export default {
   methods: {
     switchAuthMode() {
       this.isLogin = !this.isLogin;
-    }
+    },
+    toggleModal() {
+      this.showModal = !this.showModal;
+    },
   }
 };
 </script>

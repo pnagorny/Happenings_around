@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-deprecated-v-on-native-modifier -->
 <template>
     <footer class=" bg-slate-50 dark:bg-black">
       <div
@@ -15,61 +16,64 @@
           </p>
         </div>
         <div class="w-full text-center text-slate-600 md:w-1/5 md:text-left">
-          <div class="text-sm font-semibold">Home</div>
           <ul class="text-sm">
             <li class="pt-3">
-              <a class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
+              <router-link
+                class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
+                to="/"
+                @click.native="navigateToHomeSection"
               >
-                Events
-              </a>
+                Home
+              </router-link>
             </li>
             <li class="pt-3">
-              <a
+              <router-link
                 class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
-              >Map
-              </a>
+                to="/"
+                @click.native="navigateToEventSection"
+              >
+                Event
+              </router-link>
             </li>
             <li class="pt-3">
-              <a
+              <router-link
                 class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
+                to="/"
+                @click.native="navigateToMapSection"
               >
-                Create event
-              </a>
+                Map
+              </router-link>
             </li>
-            
           </ul>
         </div>
         <div class="w-full text-center text-slate-600 md:w-1/5 md:text-left">
-          <div class="text-sm font-semibold">About us</div>
           <ul class="text-sm">
             <li class="pt-3">
-              <a
+              <router-link
                 class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
+                to="/about"
+                @click.native="navigateToAboutSection"
               >
-                Our mission
-              </a>
+                About us
+              </router-link>
             </li>
             <li class="pt-3">
-              <a
+              <router-link
                 class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
+                to="/about"
+                @click.native="navigateToMissionSection"
+              >
+                Our Mission
+              </router-link>
+            </li>
+            <li class="pt-3">
+              <router-link
+                class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
+                to="/about"
+                @click.native="navigateToAuthorsSection"
               >
                 Authors
-              </a>
+              </router-link>
             </li>
             <li class="pt-3">
               <a
@@ -94,29 +98,16 @@
           </ul>
         </div>
         <div class="w-full text-center text-slate-600 md:w-1/5 md:text-left">
-          <div class="text-sm font-semibold text-slate-600">Join us</div>
           <ul class="text-sm">
             <li class="pt-3">
-              <a
-                class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Register
-              </a>
-            </li>
-            <li class="pt-3">
-              <a
-                class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-                href="#"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Log in
-              </a>
-            </li>
-            
+              <button
+        @click="showAuthModal"
+        class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
+      >
+        Join us
+      </button>
+      <AuthModal ref="authModal" />
+              </li>
           </ul>
         </div>
       </div>
@@ -130,10 +121,100 @@
         Patryk i Piotr. All rights reserved.
       </div>
     </footer>
-    
     </template>
     
     <script>
+    import { ref, onMounted } from 'vue';
+    import {getAuth, onAuthStateChanged} from 'firebase/auth';
+    import AuthModal from '../components/SignInModal.vue';
+    import "../assets/tailwind.css";
     
+    export default {
+      components: {
+        AuthModal,
+      },
+      methods: {
+        showAuthModal() {
+      this.$refs.authModal.showModal = true;
+    },
+    navigateToAuthorsSection() {
+        this.$router.push({ name: 'about' }).then(() => {
+          this.$nextTick(() => {
+            const authorsSection = document.getElementById('authors-section-id');
+            if (authorsSection) {
+              authorsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
+      navigateToMissionSection() {
+        this.$router.push({ name: 'about' }).then(() => {
+          this.$nextTick(() => {
+            const missionSection = document.getElementById('mission-items');
+            if (missionSection) {
+              missionSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
+      navigateToMapSection() {
+        this.$router.push({ name: 'home' }).then(() => {
+          this.$nextTick(() => {
+            const mapSection = document.getElementById('map');
+            if (mapSection) {
+              mapSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
+      navigateToEventSection() {
+        this.$router.push({ name: 'events' }).then(() => {
+          this.$nextTick(() => {
+            const eventSection = document.getElementById('event-list-main');
+            if (eventSection) {
+              eventSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
+      navigateToHomeSection() {
+        this.$router.push({ name: 'home' }).then(() => {
+          this.$nextTick(() => {
+            const homeSection = document.getElementById('home');
+            if (homeSection) {
+              homeSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
+      navigateToAboutSection() {
+        this.$router.push({ name: 'about' }).then(() => {
+          this.$nextTick(() => {
+            const aboutSection = document.getElementById('about-section');
+            if (aboutSection) {
+              aboutSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
     
-    </script>
+      },
+      setup() {
+    const name = ref("");
+    const isLoggedIn = ref(false);
+
+    let auth;
+    onMounted(() => {
+      auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        isLoggedIn.value = !!user;
+      })
+    });
+    return {
+      name,
+      isLoggedIn
+    }
+  }
+    };
+</script>
+    
