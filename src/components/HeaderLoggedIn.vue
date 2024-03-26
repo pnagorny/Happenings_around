@@ -10,7 +10,7 @@
       </div>
     <div class="md:flex md:justify-end md:items-center">
       
-      <ul class="md:flex md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gradient-to-t from-1_color from-60% to-2_color   md:bg-gradient-to-t from-2_color from-60% to-2_color md:w-auto w-full top-20 duration-700 ease-in" 
+      <ul class="md:flex md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gradient-to-t from-1_color from-60% to-2_color md:bg-gradient-to-t from-2_color from-60% to-2_color md:w-auto w-full top-20 duration-700 ease-in" 
         :class="[open ? 'right-0' : 'right-[100%]']">
         <li class="md:mx-4 md:my-0 my-6" v-for="(link, index) in Links" :key="index">
           <button @click="$router.push(link.route)" class="text-white font-mono text-xl hover: hover:bg-1_color hover:rounded-lg px-4 py-1 transition-all">{{link.name}}</button>
