@@ -99,6 +99,16 @@ navigateToAboutSection() {
           });
         });
       },
+navigateToFullEvent() {
+        this.$router.push({ name: 'events' }).then(() => {
+          this.$nextTick(() => {
+            const eventSection = document.getElementById('event-list-main');
+            if (eventSection) {
+              eventSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
 
   },
   setup() {

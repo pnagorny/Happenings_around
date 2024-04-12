@@ -3,9 +3,9 @@
 <div class="p-4 md:mx-0 mx-4 my-10 md:my-0 bg-white rounded-lg border shadow-2xl sm:p-8 dark:bg-gray-800 dark:border-gray-700">
   <div class="flex justify-between items-center mb-4">
       <h3 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Events</h3>
-      <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+      <router-link to="/events" @click="navigateToFullEvent" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
           View all
-      </a>
+      </router-link>
  </div>
  <div class="flow-root">
   <ul role="list" v-for="event in limitedEvents" :key="event.id" class=" divide-y divide-gray-200 dark:divide-gray-700">
@@ -77,6 +77,16 @@
       zoomToEvent(event) {
       this.$emit('zoomToEvent', event.geoPoint);
     },
+    navigateToFullEvent() {
+        this.$router.push({ name: 'events' }).then(() => {
+          this.$nextTick(() => {
+            const eventSection = document.getElementById('event-list-main');
+            if (eventSection) {
+              eventSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      },
     },
   };
   </script>
