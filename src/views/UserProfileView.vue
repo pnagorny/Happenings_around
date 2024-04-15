@@ -1,62 +1,58 @@
 <template>
-<HeaderLoggedIn v-if="isLoggedIn" />
-    <HeaderNotLoggedIn v-else />
-    <section class="w-full h-96 pt-20 bg-gradient-to-b from-2_color to-1_color">
-    <div class="container mx-auto flex justify-center items-center py-5">
-        <p class="text-black text-2xl font-mono font-bold ">USER PROFILE PAGE</p>
-
+  <HeaderLoggedIn/>
+  <div class="flex justify-center mt-10">
+    <div v-if="user" class="max-w-xl w-full bg-white rounded-lg shadow-lg p-6">
+      <div class="text-center mb-6">
+        <img :src="user.photoURL || 'https://via.placeholder.com/150'" alt="Profile Photo" class="mx-auto rounded-full h-32 w-32 object-cover">
+        <h1 class="text-xl font-semibold text-gray-900 mt-4">{{ user.name }} {{ user.surname }}</h1>
+        <p class="text-sm text-gray-600">{{ user.nickname }}</p>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center">
+          <h2 class="text-gray-600 font-medium">Email:</h2>
+          <p class="text-gray-800">{{ user.email }}</p>
+        </div>
+        <!-- Additional fields can be added here if needed -->
+      </div>
     </div>
-    <div class="container mx-auto flex justify-center items-center">
-           
-    <p v-if="isLoggedIn">Jesteś zalogowany</p>
-    <p v-else>Nie jesteś zalogowany.</p>
+    <div v-else class="text-center">
+      <p>Loading user profile or user not found...</p>
     </div>
-</section>
-<section>
-
-</section>
-<FooterLoggedIn v-if="isLoggedIn" />
-    <FooterNotLoggedIn v-else />
+  </div>
+  <FooterLoggedIn/>
 </template>
 
-<script>
 
+<script>
 import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
-import { ref, onMounted } from 'vue';
-import HeaderNotLoggedIn from '@/components/HeaderNotLoggedIn.vue';
 import FooterLoggedIn from '@/components/FooterLoggedIn.vue';
-import FooterNotLoggedIn from '@/components/FooterNotLoggedIn.vue';
+import { getAuth } from 'firebase/auth';
+import { onMounted, ref } from 'vue';
+import { db } from '../main.js'; // Ensure this points to your Firebase initialization
 
 export default {
-  components: {
-  HeaderLoggedIn, HeaderNotLoggedIn,FooterNotLoggedIn,FooterLoggedIn
-  },
-  methods: {
-    handleZoomToEvent(geoPoint) {
-      if (this.$refs.googleMap) {
-        this.$refs.googleMap.zoomToLocation(geoPoint);
+  components: { HeaderLoggedIn, FooterLoggedIn },
+  setup() {
+    const user = ref(null);
+
+    onMounted(async () => {
+      const auth = getAuth();
+      const userAuth = auth.currentUser;
+      if (userAuth) {
+        const docRef = db.collection('users').doc(userAuth.uid);
+        const doc = await docRef.get();
+        if (doc.exists) {
+          user.value = doc.data();
+        } else {
+          console.log("User document does not exist!");
+        }
+      } else {
+        console.log("No user is signed in.");
       }
-    },
-
-  },
-  setup () {
-    const name = ref("");
-    const isLoggedIn = ref(false);
-
-
-    let auth;
-    onMounted(() => {
-      auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        isLoggedIn.value = !!user;
-      })
     });
 
-    return {
-      name,
-      isLoggedIn
-    }
+    return { user };
   }
 }
 </script>
+
