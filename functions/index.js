@@ -15,6 +15,30 @@ const googleMapsApiKey = "AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4";
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
+exports.registerUser = onRequest(async (request, response) => {
+  try {
+    const {email, password, nickname, name, surname, photoUrl} = request.body;
+    if (!email || !password) {
+      response.status(400).send("Email and password are required.");
+      return;
+    }
+
+    const userEntry = {
+      email: email,
+      nickname: nickname,
+      name: name,
+      surname: surname,
+      photoUrl: photoUrl,
+    };
+    await db.collection("users").add(userEntry);
+    // eslint-disable-next-line max-len
+    response.status(201).send({message: "User registered successfully"});
+  } catch (error) {
+    logger.error("An error occurred:", error);
+    response.status(500).send("Internal Server Error: " + error.message);
+  }
+});
+
 exports.geocodeAddressAndSave = onRequest(async (request, response) => {
   try {
     const {address,
