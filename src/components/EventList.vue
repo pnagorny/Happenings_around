@@ -2,9 +2,9 @@
 <div class="max-w-2xl">
 <div class="p-4 md:mx-0 mx-4 my-10 md:my-0 bg-white rounded-lg border shadow-2xl sm:p-8 dark:bg-gray-800 dark:border-gray-700">
   <div class="flex justify-between items-center mb-4">
-      <h3 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Events</h3>
+      <h3 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Nadchodzące wydarzenia</h3>
       <router-link to="/events" @click="navigateToFullEvent" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-          View all
+          Zobacz wszystkie
       </router-link>
  </div>
  <div class="flow-root">
