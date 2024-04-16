@@ -12,7 +12,7 @@
           <li class="py-4 sm:py-5 rounded hover:bg-gray-600" @click="zoomToEvent(event)">
               <div class="flex items-center space-x-4">
                   <div class="flex-1 min-w-0">
-                      <p class="text-xl font-medium text-gray-900 truncate dark:text-white">
+                      <p class="lg:text-xl text-sm font-bold text-gray-900 truncate dark:text-white">
                         {{ event.eventName }}
                       </p>
                       <p class="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -22,7 +22,7 @@
                         {{ event.address }}
                       </p>
                   </div>
-                  <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                  <div class=" w-24 lg:w-auto inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                     {{ event.eventDateTime }}
                   </div>
               </div>

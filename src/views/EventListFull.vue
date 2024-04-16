@@ -68,14 +68,14 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
 <div class="container px-5 py-24 mx-auto ">
   <div class="flex flex-wrap -m-4">
   
-    <div  class="p-4 md:w-1/3 sm:w-full rounded-2xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative" v-for="event in events" :key="event.id"  @click="openModal(event);handleZoomToEvent(event)" >
-      <a href="" class="hover:text-red absolute  top-5 right-5 mt-2 mr-3">
+    <div  class="p-4 md:w-1/3 sm:w-full rounded-2xl hover:-translate-y-2 duration-300 relative" v-for="event in events" :key="event.id"  @click="openModal(event);handleZoomToEvent(event)" >
+      <a href="" class="hover:text-red absolute  top-5 right-5 mt-2 mr-3 ">
         <svg class="w-10 h-10 text-slate-100 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
             </svg>
         </a>
 
-      <div class="h-full rounded-2xl overflow-hidden bg-slate-100">
+      <div class="h-full rounded-2xl overflow-hidden bg-slate-100 hover:shadow-2xl   ">
         <img class="lg:h-80 md:h-36 sm:h-80 h-80 w-full  object-cover object-center" :src="event.imageURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
         <div class='p-6'>
           <h1 class="text-2xl font-bold text-black mb-3 line-clamp-2">{{ event.eventName }}</h1>
