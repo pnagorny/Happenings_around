@@ -5,7 +5,8 @@
             <h1>Zarejestruj się</h1>
         </div>
         <form @submit.prevent="Register">
-            <input type="file" @change="handleFileChange" class="border w-full px-3 py-2 mt-2 hover:outline-none focus:outline-none rounded-md"/><br>
+            <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-black" for="file_input">Prześlij zdjęcie profilowe</label>
+            <input type="file" @change="handleFileChange" class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-slate-200 dark:border-gray-600 dark:placeholder-gray-400" id="file_input"/>
             <input type="text" placeholder="Email" v-model="registerData.email" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"/><br>
             <input type="password" placeholder="Password" v-model="registerData.password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"/><br>
             <input type="text" placeholder="Nickname" v-model="registerData.nickname" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"/><br>

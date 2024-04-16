@@ -106,6 +106,7 @@
         </div>
       </div>
     </section>
+    
     <section class="w-full pt-48 bg-gradient-to-b from-1_color to-2_color" id="authors-section-id">
       <div class="container mx-auto text-center">
         <h2 class="text-black text-2xl font-mono font-bold py-5">Autorzy</h2>
