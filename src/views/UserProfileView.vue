@@ -11,13 +11,9 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
 </svg>
 </label>
   <div   class="h-11/12 lg:w-2/5 lg:h-4/5 rounded-2xl m-10 scale-90 overflow-y-auto overscroll-contain  bg-white  text-black shadow-2xl transition" >
-    <a href="" class="hover:text-red absolute  top-5 right-5 mt-2 mr-3">
-      <svg class="w-10 h-10 text-slate-100 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-            </svg>
-        </a>
+    
         <div class="h-full rounded-2xl overflow-hidden bg-slate-100">
-        <img class="lg:h-96 md:h-36 sm:h-80 h-20 w-full  object-cover object-center" :src="selectedEventPop.photoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
+        <img class="lg:h-96 md:h-36 sm:h-80 h-20 w-full  object-cover object-center" :src="selectedEventPop.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
         <div class='p-6'>
           <h1 class="text-3xl font-bold text-black mb-3 line-clamp-2">{{ selectedEventPop.eventName }}</h1>
           <h2 class="text-slate-400 pt-2 font-semibold ">{{ formatDate(selectedEventPop.eventDateTime) }}</h2>
@@ -78,7 +74,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
       <div class="rounded-lg p-6 bg-transparent h-80">
         <h2 class="text-xl font-medium text-white">Zbliżający się</h2>
         <div class="mt-4 bg-white rounded-2xl shadow-lg cursor-pointer" @click="openModal">
-          <img :src="upcomingEvent.imageURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" class="w-full h-64 object-cover rounded-t-2xl">
+          <img :src="upcomingEvent.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" class="w-full h-64 object-cover rounded-t-2xl">
           <div class="p-4 h-40">
             <h3 class="text-xl font-medium">{{ upcomingEvent.eventName }}</h3>
             <p class="text-gray-500">{{ formatDate(upcomingEvent.eventDateTime) }}</p>
@@ -91,7 +87,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
     </div>
   </div>
     <!-- Edit Modal -->
-    <div v-if="editModalOpen" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+    <div v-if="editModalOpen" @click.self="editModalOpen = false" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center backdrop-filter backdrop-blur-lg transition-all duration-200 ease-in-out z-10">
       <div class="bg-white p-5 rounded-lg">
         <h3 class="text-lg font-bold">Edytuj {{ currentEditField }}</h3>
         <input type="text" v-model="editValue" class="border p-2 w-full">
@@ -114,7 +110,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
       </button>
       <div ref="scrollContainer" class="flex overflow-x-auto space-x-4 w-full px-4 scrollbar-hide">
         <div v-for="event in likedEvents" :key="event.id" @click="openModal(event); handleZoomToEvent(event)" class="min-w-[280px] w-[280px] bg-white rounded-2xl shadow-lg relative cursor-pointer">
-          <img :src="event.photoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" class="w-full h-40 object-cover rounded-t-2xl">
+          <img :src="event.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" class="w-full h-40 object-cover rounded-t-2xl">
           <div class="p-4">
             <h3 class="text-xl font-semibold">{{ event.eventName }}</h3>
             <p class="text-gray-500">{{ formatDate(event.eventDateTime) }}</p>

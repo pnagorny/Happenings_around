@@ -13,7 +13,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
 </svg>
 </label>
-  <div   class="h-11/12 lg:w-2/5 lg:h-4/5 rounded-2xl m-10 scale-90 overflow-y-auto overscroll-contain  bg-white  text-black shadow-2xl transition" >
+  <div class="h-11/12 lg:w-2/5 lg:h-4/5 rounded-2xl m-10 scale-90 overflow-y-auto overscroll-contain  bg-white  text-black shadow-2xl transition" >
     <a href="" class="hover:text-red absolute  top-5 right-5 mt-2 mr-3">
       <svg class="w-10 h-10 text-slate-100 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
@@ -69,11 +69,11 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
   <div class="flex flex-wrap -m-4">
   
     <div  class="p-4 md:w-1/3 sm:w-full rounded-2xl hover:-translate-y-2 duration-300 relative" v-for="event in events" :key="event.id"  @click="openModal(event);handleZoomToEvent(event)" >
-      <a href="" class="hover:text-red absolute  top-5 right-5 mt-2 mr-3 ">
-        <svg class="w-10 h-10 text-slate-100 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-            </svg>
-          </a>
+      <button @click.stop="toggleLikeEvent(event)" class="absolute top-5 right-5 mt-2 mr-3 focus:outline-none">
+    <svg :class="{ 'text-red-500': isEventLiked(event.id), 'text-slate-100': !isEventLiked(event.id) }" class="w-10 h-10 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+    </svg>
+  </button>
 
       <div class="h-full rounded-2xl overflow-hidden bg-slate-100 hover:shadow-2xl   ">
         <img class="lg:h-80 md:h-36 sm:h-80 h-80 w-full  object-cover object-center" :src="event.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
