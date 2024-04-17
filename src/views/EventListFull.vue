@@ -20,7 +20,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
             </svg>
         </a>
         <div class="h-full rounded-2xl overflow-hidden bg-slate-100">
-        <img class="lg:h-96 md:h-36 sm:h-80 h-20 w-full  object-cover object-center" :src="selectedEvent.imageURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
+        <img class="lg:h-96 md:h-36 sm:h-80 h-20 w-full  object-cover object-center" :src="selectedEvent.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
         <div class='p-6'>
           <h1 class="text-3xl font-bold text-black mb-3 line-clamp-2">{{ selectedEvent.eventName }}</h1>
           <h2 class="text-slate-400 pt-2 font-semibold ">{{ selectedEvent.eventDateTime }}</h2>
@@ -76,7 +76,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
         </a>
 
       <div class="h-full rounded-2xl overflow-hidden bg-slate-100 hover:shadow-2xl   ">
-        <img class="lg:h-80 md:h-36 sm:h-80 h-80 w-full  object-cover object-center" :src="event.imageURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
+        <img class="lg:h-80 md:h-36 sm:h-80 h-80 w-full  object-cover object-center" :src="event.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
         <div class='p-6'>
           <h1 class="text-2xl font-bold text-black mb-3 line-clamp-2">{{ event.eventName }}</h1>
           <h2 class="text-slate-400 pt-2 font-semibold ">{{ event.eventDateTime }}</h2>

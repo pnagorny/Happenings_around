@@ -44,7 +44,8 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
     const {address,
       eventName,
       eventDateTime,
-      eventDescription} = request.body;
+      eventDescription,
+      eventPhotoURL} = request.body;
     const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleMapsApiKey}`);
 
     if (data.status !== "OK") {
@@ -63,6 +64,7 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
       eventName: eventName,
       eventDateTime: eventDateTime,
       eventDescription: eventDescription,
+      eventPhotoURL: eventPhotoURL,
     };
 
     await db.collection("locations").add(objGeocodedLocation);
