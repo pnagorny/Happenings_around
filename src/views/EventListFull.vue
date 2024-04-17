@@ -73,7 +73,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
         <svg class="w-10 h-10 text-slate-100 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
             </svg>
-        </a>
+          </a>
 
       <div class="h-full rounded-2xl overflow-hidden bg-slate-100 hover:shadow-2xl   ">
         <img class="lg:h-80 md:h-36 sm:h-80 h-80 w-full  object-cover object-center" :src="event.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
@@ -127,6 +127,7 @@ import GoogleMap from '../components/GoogleMap.vue';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { ref, onMounted, reactive, watch, computed, nextTick } from 'vue';
 import { db } from "../main.js";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 
 export default {
   components: {
@@ -153,6 +154,8 @@ export default {
     const pageSize = 9;
     const selectedEvent = ref({});
     const modalCheckbox = ref(null);
+    const auth = getAuth();
+    const user = ref(null);
   
 
    
@@ -174,9 +177,20 @@ export default {
 
     onMounted(() => {
       const auth = getAuth();
-      onAuthStateChanged(auth, user => {
-        isLoggedIn.value = !!user;
-      });
+      onAuthStateChanged(auth, async (authUser) => {
+      if (authUser) {
+        isLoggedIn.value = true;
+        const userDoc = await getDoc(doc(db, "users", authUser.uid));
+        if (userDoc.exists()) {
+          user.value = { uid: authUser.uid, ...userDoc.data() };
+        } else {
+          console.log("No such document!");
+        }
+      } else {
+        isLoggedIn.value = false;
+        user.value = null;
+      }
+    });
       unsubscribe = db.collection("locations").onSnapshot(snapshot => {
         events.value = snapshot.docs.map(doc => {
           const data = doc.data();
@@ -188,6 +202,27 @@ export default {
         console.error("Error fetching events:", error);
       });
     });
+
+    const toggleLikeEvent = async (event) => {
+      if (!user.value) return;
+      const userDocRef = doc(db, 'users', user.value.uid);
+      if (isEventLiked(event.id)) {
+        await updateDoc(userDocRef, {
+          likedEvents: arrayRemove(event.id)
+        });
+        user.value.likedEvents = user.value.likedEvents.filter(id => id !== event.id);
+      } else {
+        await updateDoc(userDocRef, {
+          likedEvents: arrayUnion(event.id)
+        });
+        user.value.likedEvents.push(event.id);
+      }
+    };
+
+    const isEventLiked = (eventId) => {
+      return user.value?.likedEvents.includes(eventId);
+    };
+
 
     watch(filter, applyFilter);
 
@@ -240,7 +275,26 @@ export default {
       }
     };
     
-    
+    const handleLikeEvent = async (domEvent, eventData) => {
+  domEvent.preventDefault(); // Prevent default link behavior
+
+  if (!auth.currentUser) {
+    alert("You must be logged in to like events.");
+    return;
+  }
+
+  const userDocRef = doc(db, 'users', auth.currentUser.uid);
+  try {
+    // Add the event ID to the 'likedEvents' array in the user document
+    await updateDoc(userDocRef, {
+      likedEvents: arrayUnion(eventData.id)
+    });
+  } catch (error) {
+    console.error("Error liking event:", error);
+
+  }
+};
+
   
     
     
@@ -259,7 +313,10 @@ export default {
       openModal,
       closeModal,
       selectedEvent,
-      modalCheckbox
+      modalCheckbox,
+      handleLikeEvent,
+      toggleLikeEvent, 
+      isEventLiked,
       
       
 
