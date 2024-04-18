@@ -13,12 +13,12 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
 </svg>
 </label>
-  <div class="h-11/12 lg:w-2/5 lg:h-4/5 rounded-2xl m-10 scale-90 overflow-y-auto overscroll-contain  bg-white  text-black shadow-2xl transition" >
-    <a href="" class="hover:text-red absolute  top-5 right-5 mt-2 mr-3">
-      <svg class="w-10 h-10 text-slate-100 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-            </svg>
-        </a>
+  <div  class="h-11/12 lg:w-2/5 lg:h-4/5 rounded-2xl m-10 scale-90 overflow-y-auto overscroll-contain  bg-white  text-black shadow-2xl transition" >
+    <button @click.stop="toggleLikeEvent(selectedEvent)" class="absolute top-5 right-5 mt-2 mr-3 focus:outline-none">
+    <svg :class="{ 'text-red-500': isEventLiked(selectedEvent.id), 'text-slate-100': !isEventLiked(selectedEvent.id) }" class="w-10 h-10 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+    </svg>
+  </button>
         <div class="h-full rounded-2xl overflow-hidden bg-slate-100">
         <img class="lg:h-96 md:h-36 sm:h-80 h-20 w-full  object-cover object-center" :src="selectedEvent.eventPhotoURL || 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'" alt="event image">
         <div class='p-6'>
@@ -29,17 +29,13 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
 
           
       <div class="text-end">
-      <span class=" mr-3 inline-flex items-center text-end lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+        <span class="  inline-flex items-center text-end  leading-none text-sm  py-1 ">
       <svg class="w-4 h-4 mr-1" stroke="black" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
       <circle cx="12" cy="12" r="3"></circle>
-      </svg>1.2K
+      </svg>{{ selectedEvent.likesCount || 0 }}
     </span>
-    <span class=" inline-flex items-center leading-none text-sm">
-      <svg class="w-4 h-4 mr-1" stroke="black" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-      </svg>6
-    </span>
+    
   </div>
         </div>
       </div>
@@ -68,7 +64,7 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
 <div class="container px-5 py-24 mx-auto ">
   <div class="flex flex-wrap -m-4">
   
-    <div  class="p-4 md:w-1/3 sm:w-full rounded-2xl hover:-translate-y-2 duration-300 relative" v-for="event in events" :key="event.id"  @click="openModal(event);handleZoomToEvent(event)" >
+    <div  class="p-4 md:w-1/3 sm:w-full rounded-2xl hover:-translate-y-2 duration-300 relative" v-for="event in events" :key="event.id"  @click="openModal(event);handleZoomToEvent(event)" @click.prevent="">
       <button @click.stop="toggleLikeEvent(event)" class="absolute top-5 right-5 mt-2 mr-3 focus:outline-none">
     <svg :class="{ 'text-red-500': isEventLiked(event.id), 'text-slate-100': !isEventLiked(event.id) }" class="w-10 h-10 hover:text-red-500 duration-300" fill="currentColor" viewBox="0 0 24 24">
       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
@@ -87,16 +83,11 @@ peer-checked:opacity-100 peer-checked: [&>*]:translate-y-0 peer-checked:[&>*]:sc
             </div>
           
       <div class="text-end">
-      <span class=" mr-3 inline-flex items-center text-end lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+      <span class="  inline-flex items-center text-end  leading-none text-sm  py-1 ">
       <svg class="w-4 h-4 mr-1" stroke="black" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
       <circle cx="12" cy="12" r="3"></circle>
-      </svg>1.2K
-    </span>
-    <span class=" inline-flex items-center leading-none text-sm">
-      <svg class="w-4 h-4 mr-1" stroke="black" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-      </svg>6
+      </svg>{{ event.likesCount || 0 }}
     </span>
   </div>
         </div>
@@ -127,7 +118,7 @@ import GoogleMap from '../components/GoogleMap.vue';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { ref, onMounted, reactive, watch, computed, nextTick } from 'vue';
 import { db } from "../main.js";
-import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, increment  } from 'firebase/firestore';
 
 export default {
   components: {
@@ -205,15 +196,22 @@ export default {
 
     const toggleLikeEvent = async (event) => {
       if (!user.value) return;
+      const eventRef = doc(db, 'locations', event.id);
       const userDocRef = doc(db, 'users', user.value.uid);
       if (isEventLiked(event.id)) {
         await updateDoc(userDocRef, {
           likedEvents: arrayRemove(event.id)
         });
+        await updateDoc(eventRef, {
+          likesCount: increment(-1)
+        });
         user.value.likedEvents = user.value.likedEvents.filter(id => id !== event.id);
       } else {
         await updateDoc(userDocRef, {
           likedEvents: arrayUnion(event.id)
+        });
+        await updateDoc(eventRef, {
+          likesCount: increment(1)
         });
         user.value.likedEvents.push(event.id);
       }
