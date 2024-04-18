@@ -8,7 +8,16 @@
       <input type="text" v-model="formData.eventName" placeholder="Event Name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" />
       <input type="datetime-local" v-model="formData.eventDateTime" placeholder="Event Date and Time" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" />
       <textarea v-model="formData.eventDescription" placeholder="Event Description" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
-      <input type="file" @change="handleFileUpload" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600" />
+      <label class="block">
+      <span class="sr-only">Choose profile photo</span>
+      <input type="file" @change="handleFileUpload" class="block w-full text-sm text-slate-500
+        file:mr-4 file:py-2 file:px-4
+        file:rounded-full file:border-0
+        file:text-sm file:font-semibold
+        file:bg-violet-50 file:text-violet-700
+        hover:file:bg-violet-100
+      "/>
+    </label>
       <button type="submit" class="bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600">Wyślij</button>
     </form>
     </div>
