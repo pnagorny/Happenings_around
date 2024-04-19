@@ -302,21 +302,17 @@ export default {
     let unsubscribe = null;
 
     const applyFilter = () => {
-      if (filter.value.trim()) {
-        filteredEvents.value = events.value.filter(
-          (event) =>
-            event.eventName
-              .toLowerCase()
-              .includes(filter.value.toLowerCase().trim()) ||
-            event.address
-              .toLowerCase()
-              .includes(filter.value.toLowerCase().trim())
-        );
-      } else {
-        filteredEvents.value = events.value; // Show all events if no filter is provided
-      }
-      currentPage.value = 1; // Always reset to the first page when filter changes
-    };
+  if (filter.value.trim()) {
+    filteredEvents.value = events.value.filter(
+      (event) =>
+        event.eventName && event.eventName.toLowerCase().includes(filter.value.toLowerCase().trim()) ||
+        event.address && event.address.toLowerCase().includes(filter.value.toLowerCase().trim())
+    );
+  } else {
+    filteredEvents.value = events.value; // Show all events if no filter is provided
+  }
+  currentPage.value = 1; // Always reset to the first page when filter changes
+};
 
     onMounted(() => {
       const auth = getAuth();
@@ -375,8 +371,8 @@ export default {
     };
 
     const isEventLiked = (eventId) => {
-      return user.value?.likedEvents.includes(eventId);
-    };
+  return user.value?.likedEvents?.includes(eventId);
+};
 
     watch(filter, applyFilter);
 
