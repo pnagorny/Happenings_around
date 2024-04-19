@@ -1,59 +1,87 @@
 <template>
-    <header class="bg-2_color py-8  shadow-2xl">
-  <div class="container mx-auto md:flex justify-between items-center">
-    <div class="w-full text-lg font-extrabold md:w-fit md:text-left ">
-        <span class="text-violet-500 text-2xl ml-14 md:ml-0 select-none">Happenings</span>
+  <header class="bg-2_color py-8 shadow-2xl">
+    <div class="container mx-auto md:flex justify-between items-center">
+      <div class="w-full text-lg font-extrabold md:w-fit md:text-left">
+        <span class="text-violet-500 text-2xl ml-14 md:ml-0 select-none"
+          >Happenings</span
+        >
         <span class="text-white text-2xl select-none">Around</span>
         <button @click="MenuOpen()" class="md:hidden text-white">
-          <svg class="ml-16  w-8 h-8 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+          <svg
+            class="ml-16 w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
         </button>
       </div>
-    <div class="md:flex md:justify-end md:items-center">
-      
-      <ul class="z-10 md:flex md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gradient-to-t from-1_color from-60% to-2_color md:bg-gradient-to-t from-2_color from-60% to-2_color md:w-auto w-full top-20 duration-700 ease-in" 
-        :class="[open ? 'right-0' : 'right-[100%]']">
-        <li class="md:mx-4 md:my-0 my-6" v-for="(link, index) in Links" :key="index">
-          <button @click="$router.push(link.route)" class="text-white font-mono text-xl hover:  hover:rounded-lg px-4 py-1 hover:-translate-y-1 transition-all duration-300 select-none">{{link.name}}</button>
-        </li>
-        <li>
-          <ModalComponentParent/>
-        </li>
-        <li>
-          <button @click="Logout" class="select-none mt-6 md:mt-0 text-white font-mono text-xl bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110 md:mx-10">Wyloguj się</button>
-        </li>
+      <div class="md:flex md:justify-end md:items-center">
+        <ul
+          class="z-10 md:flex md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gradient-to-t from-1_color from-60% to-2_color md:bg-gradient-to-t from-2_color from-60% to-2_color md:w-auto w-full top-20 duration-700 ease-in"
+          :class="[open ? 'right-0' : 'right-[100%]']"
+        >
+          <li
+            class="md:mx-4 md:my-0 my-6"
+            v-for="(link, index) in Links"
+            :key="index"
+          >
+            <button
+              @click="$router.push(link.route)"
+              class="text-white font-mono text-xl hover: hover:rounded-lg px-4 py-1 hover:-translate-y-1 transition-all duration-300 select-none"
+            >
+              {{ link.name }}
+            </button>
+          </li>
+          <li>
+            <ModalComponentParent />
+          </li>
+          <li>
+            <button
+              @click="Logout"
+              class="select-none mt-6 md:mt-0 text-white font-mono text-xl bg-1_color font-medium py-2 px-4 rounded transition-transform duration-300 transform hover:scale-110 md:mx-10"
+            >
+              Wyloguj się
+            </button>
+          </li>
         </ul>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 </template>
 <script>
-import ModalComponentParent from './ModalComponentParent.vue';
-import { ref, onBeforeMount } from 'vue';
-import firebase from 'firebase/compat/app';
-import {useRouter} from 'vue-router';
+import ModalComponentParent from "./ModalComponentParent.vue";
+import { ref, onBeforeMount } from "vue";
+import firebase from "firebase/compat/app";
+import { useRouter } from "vue-router";
 
-  export default {
-    components: {
-      ModalComponentParent,
-
-    },
-    setup () {
+export default {
+  components: {
+    ModalComponentParent,
+  },
+  setup() {
     const user = firebase.auth().currentUser;
 
     const name = ref("");
     const route = useRouter();
     const open = ref(false);
     const Links = ref([
-      {name: "Strona główna", route: "/"},
-      {name: 'Wydarzenia', route: "/events"},
-      {name: 'O nas', route: "about"},
-      {name: 'Profil', route: "/profile"},
+      { name: "Strona główna", route: "/" },
+      { name: "Wydarzenia", route: "/events" },
+      { name: "O nas", route: "about" },
+      { name: "Profil", route: "/profile" },
     ]);
-    onBeforeMount(() =>{
+    onBeforeMount(() => {
       if (user) {
-        name.value = user.email.split('@')[0];
+        name.value = user.email.split("@")[0];
       }
-
     });
     const MenuOpen = () => {
       open.value = !open.value;
@@ -63,22 +91,19 @@ import {useRouter} from 'vue-router';
         .auth()
         .signOut()
         .then((data) => {
-          window.alert("Logged out!")
-          route.push('/')
+          window.alert("Logged out!");
+          route.push("/");
         })
-        .catch(err => alert(err.message));
-    }
+        .catch((err) => alert(err.message));
+    };
     return {
-        showModal: false,
-        name,
-        Logout,
-        Links,
-        open,
-        MenuOpen,
-      };
-    },
-    }
-
-
-
+      showModal: false,
+      name,
+      Logout,
+      Links,
+      open,
+      MenuOpen,
+    };
+  },
+};
 </script>

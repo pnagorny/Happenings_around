@@ -1,113 +1,126 @@
 <template>
   <body>
     <section id="about-section">
-    <HeaderLoggedIn v-if="isLoggedIn" />
-    <HeaderNotLoggedIn v-else />
+      <HeaderLoggedIn v-if="isLoggedIn" />
+      <HeaderNotLoggedIn v-else />
     </section>
-<section id='mission-items' class="w-full pt-20 bg-gradient-to-b from-2_color to-1_color">
-    <div class="container mx-auto flex justify-center items-center py-5">
-        <p class="text-black text-2xl font-mono font-bold ">Nasza misja</p>
-
-    </div>
-    <div class="container mx-auto flex justify-center items-center">
-        <p class="text-black text-xl font-mono font-bold py-1">opis opis opisopis opis opisopis opis opisopis opis opisopis opis opisopis opis opis</p>
-    </div>
-</section>
-<section class="w-full py-5">
-  <div class="container mx-auto md:flex justify-between flex-wrap">
-
-    <div class="md:w-1/5 p-4 text-center">
-      <div class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center">
-        <!-- Tytuł misji -->
-        <p class="text-black text-xl font-mono">Tytuł misji</p>
-        <!-- Opis misji -->
-        <p class="text-black text-sm font-mono">Opis misji</p>
-        <!-- Miejsce na obrazek -->
-        <div class="w-full h-40  flex justify-center items-center">
-          <img src="ścieżka_do_obrazka" alt="Obrazek misji" class="max-h-full max-w-full">
-        </div>
+    <section
+      id="mission-items"
+      class="w-full pt-20 bg-gradient-to-b from-2_color to-1_color"
+    >
+      <div class="container mx-auto flex justify-center items-center py-5">
+        <p class="text-black text-2xl font-mono font-bold">Nasza misja</p>
       </div>
-    </div>
-
-        <div class="md:w-1/5 p-4 text-center">
-          <div
-            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
-          >
-            <!-- Tytuł misji -->
-            <p class="text-black text-xl font-mono">Tytuł misji</p>
-            <!-- Opis misji -->
-            <p class="text-black text-sm font-mono">Opis misji</p>
-            <!-- Miejsce na obrazek -->
-            <div class="w-full h-40 flex justify-center items-center">
-              <img
-                src="ścieżka_do_obrazka"
-                alt="Obrazek misji"
-                class="max-h-full max-w-full"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="md:w-1/5 p-4 text-center">
-          <div
-            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
-          >
-            <!-- Tytuł misji -->
-            <p class="text-black text-xl font-mono">Tytuł misji</p>
-            <!-- Opis misji -->
-            <p class="text-black text-sm font-mono">Opis misji</p>
-            <!-- Miejsce na obrazek -->
-            <div class="w-full h-40 flex justify-center items-center">
-              <img
-                src="ścieżka_do_obrazka"
-                alt="Obrazek misji"
-                class="max-h-full max-w-full"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="md:w-1/5 p-4 text-center">
-          <div
-            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
-          >
-            <!-- Tytuł misji -->
-            <p class="text-black text-xl font-mono">Tytuł misji</p>
-            <!-- Opis misji -->
-            <p class="text-black text-sm font-mono">Opis misji</p>
-            <!-- Miejsce na obrazek -->
-            <div class="w-full h-40 flex justify-center items-center">
-              <img
-                src="ścieżka_do_obrazka"
-                alt="Obrazek misji"
-                class="max-h-full max-w-full"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="md:w-1/5 p-4 text-center">
-          <div
-            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
-          >
-            <!-- Tytuł misji -->
-            <p class="text-black text-xl font-mono">Tytuł misji</p>
-            <!-- Opis misji -->
-            <p class="text-black text-sm font-mono">Opis misji</p>
-            <!-- Miejsce na obrazek -->
-            <div class="w-full h-40 flex justify-center items-center">
-              <img
-                src="ścieżka_do_obrazka"
-                alt="Obrazek misji"
-                class="max-h-full max-w-full"
-              />
-            </div>
-          </div>
-        </div>
+      <div class="container mx-auto flex justify-center items-center">
+        <p class="text-black text-xl font-mono font-bold py-1">
+          opis opis opisopis opis opisopis opis opisopis opis opisopis opis
+          opisopis opis opis
+        </p>
       </div>
     </section>
-    
-    <section class="w-full pt-48 bg-gradient-to-b from-1_color to-2_color" id="authors-section-id">
+    <section class="w-full py-5">
+      <div class="container mx-auto md:flex justify-between flex-wrap">
+        <div class="md:w-1/5 p-4 text-center">
+          <div
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+          >
+            <!-- Tytuł misji -->
+            <p class="text-black text-xl font-mono">Tytuł misji</p>
+            <!-- Opis misji -->
+            <p class="text-black text-sm font-mono">Opis misji</p>
+            <!-- Miejsce na obrazek -->
+            <div class="w-full h-40 flex justify-center items-center">
+              <img
+                src="ścieżka_do_obrazka"
+                alt="Obrazek misji"
+                class="max-h-full max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/5 p-4 text-center">
+          <div
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+          >
+            <!-- Tytuł misji -->
+            <p class="text-black text-xl font-mono">Tytuł misji</p>
+            <!-- Opis misji -->
+            <p class="text-black text-sm font-mono">Opis misji</p>
+            <!-- Miejsce na obrazek -->
+            <div class="w-full h-40 flex justify-center items-center">
+              <img
+                src="ścieżka_do_obrazka"
+                alt="Obrazek misji"
+                class="max-h-full max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/5 p-4 text-center">
+          <div
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+          >
+            <!-- Tytuł misji -->
+            <p class="text-black text-xl font-mono">Tytuł misji</p>
+            <!-- Opis misji -->
+            <p class="text-black text-sm font-mono">Opis misji</p>
+            <!-- Miejsce na obrazek -->
+            <div class="w-full h-40 flex justify-center items-center">
+              <img
+                src="ścieżka_do_obrazka"
+                alt="Obrazek misji"
+                class="max-h-full max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/5 p-4 text-center">
+          <div
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+          >
+            <!-- Tytuł misji -->
+            <p class="text-black text-xl font-mono">Tytuł misji</p>
+            <!-- Opis misji -->
+            <p class="text-black text-sm font-mono">Opis misji</p>
+            <!-- Miejsce na obrazek -->
+            <div class="w-full h-40 flex justify-center items-center">
+              <img
+                src="ścieżka_do_obrazka"
+                alt="Obrazek misji"
+                class="max-h-full max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/5 p-4 text-center">
+          <div
+            class="bg-3_color h-96 p-6 rounded-lg shadow-2xl flex flex-col justify-around items-center"
+          >
+            <!-- Tytuł misji -->
+            <p class="text-black text-xl font-mono">Tytuł misji</p>
+            <!-- Opis misji -->
+            <p class="text-black text-sm font-mono">Opis misji</p>
+            <!-- Miejsce na obrazek -->
+            <div class="w-full h-40 flex justify-center items-center">
+              <img
+                src="ścieżka_do_obrazka"
+                alt="Obrazek misji"
+                class="max-h-full max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="w-full pt-48 bg-gradient-to-b from-1_color to-2_color"
+      id="authors-section-id"
+    >
       <div class="container mx-auto text-center">
         <h2 class="text-black text-2xl font-mono font-bold py-5">Autorzy</h2>
       </div>
@@ -203,13 +216,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import HeaderLoggedIn from '../components/HeaderLoggedIn.vue';
-import HeaderNotLoggedIn from '../components/HeaderNotLoggedIn.vue';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import FooterNotLoggedIn from '@/components/FooterNotLoggedIn.vue';
-import FooterLoggedIn from '@/components/FooterLoggedIn'
-import '../assets/tailwind.css';
+import { ref, onMounted } from "vue";
+import HeaderLoggedIn from "../components/HeaderLoggedIn.vue";
+import HeaderNotLoggedIn from "../components/HeaderNotLoggedIn.vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import FooterNotLoggedIn from "@/components/FooterNotLoggedIn.vue";
+import FooterLoggedIn from "@/components/FooterLoggedIn";
+import "../assets/tailwind.css";
 
 export default {
   components: {
@@ -218,7 +231,7 @@ export default {
     FooterLoggedIn,
     FooterNotLoggedIn,
   },
-  setup () {
+  setup() {
     const isLoggedIn = ref(false);
 
     onMounted(() => {
@@ -229,8 +242,8 @@ export default {
     });
 
     return {
-      isLoggedIn
+      isLoggedIn,
     };
-  }
-}
+  },
+};
 </script>
