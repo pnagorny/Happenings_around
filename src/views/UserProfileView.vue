@@ -254,14 +254,14 @@
                   openModal(event);
                   handleZoomToEvent(event);
                 "
-                class="min-w-[280px] w-[280px] bg-slate-200 rounded-2xl relative cursor-pointer"
+                class="min-w-[280px] w-[280px] bg-slate-200 rounded-2xl relative cursor-pointer flex flex-col justify-between"
               >
                 <img
                   :src="
                     event.eventPhotoURL ||
                     'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_QL75_UX380_CR0,1,380,562_.jpg'
                   "
-                  class="w-full h-40 object-cover rounded-t-2xl"
+                  class="w-full h-40 flex-grow object-cover rounded-t-2xl"
                 />
                 <div class="p-4">
                   <h3 class="text-lg font-bold text-black line-clamp-5">
