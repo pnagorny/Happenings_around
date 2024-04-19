@@ -1,9 +1,10 @@
 <template>
-    <div>
-    
-  </div>
-    <div ref="map" style="width: 45rem; height: 47rem" class="rounded-lg md:mx-0 mx-4 shadow-2xl">
-    </div>
+  <div></div>
+  <div
+    ref="map"
+    style="width: 45rem; height: 47rem"
+    class="rounded-lg md:mx-0 mx-4 shadow-2xl"
+  ></div>
 </template>
 
 <script>
@@ -15,28 +16,28 @@ export default {
   data: () => ({
     markers: [],
     formData: {
-    street: "",
-    eventName: "",
-    eventDateTime: "",
-    eventDescription: "",
-  },
-  map: null,
-  center: {lat: 54.370799, lng: 18.6127864}
+      street: "",
+      eventName: "",
+      eventDateTime: "",
+      eventDescription: "",
+    },
+    map: null,
+    center: { lat: 54.370799, lng: 18.6127864 },
   }),
   async beforeMount() {
-  const snap = await db.collection("locations").get();
-  snap.docs.forEach((doc) => {
-    const data = doc.data();
-    if (data.geoPoint && data.geoPoint.latitude && data.geoPoint.longitude) {
-      this.markers.push({
-        ...data,
-        _marker: null  // Initialize a property to store the Google Maps marker instance
-      });
-    } else {
-      console.error("Invalid marker data:", data);
-    }
-  });
-},
+    const snap = await db.collection("locations").get();
+    snap.docs.forEach((doc) => {
+      const data = doc.data();
+      if (data.geoPoint && data.geoPoint.latitude && data.geoPoint.longitude) {
+        this.markers.push({
+          ...data,
+          _marker: null, // Initialize a property to store the Google Maps marker instance
+        });
+      } else {
+        console.error("Invalid marker data:", data);
+      }
+    });
+  },
   mounted() {
     this.loadGoogleMapsScript().then(() => {
       this.initMap();
@@ -44,11 +45,11 @@ export default {
   },
   methods: {
     loadGoogleMapsScript() {
-        return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         if (window.google && window.google.maps) {
           resolve();
         } else {
-          const script = document.createElement('script');
+          const script = document.createElement("script");
           script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyC42wAPlAJjDFuOdDX12hmhWvlojFOC0B4&libraries=places`;
           script.async = true;
           script.defer = true;
@@ -63,20 +64,18 @@ export default {
       });
     },
     initMap() {
-  // eslint-disable-next-line no-undef
-  this.map = new google.maps.Map(this.$refs.map, {
-    center: this.center,
-    zoom: 12,
-  });
+      // eslint-disable-next-line no-undef
+      this.map = new google.maps.Map(this.$refs.map, {
+        center: this.center,
+        zoom: 12,
+      });
 
-  this.map.addListener('idle', () => {
-    this.addMarkers();
-  });
-},
+      this.map.addListener("idle", () => {
+        this.addMarkers();
+      });
+    },
     async handleFormSubmit() {
-      if (
-        !this.formData.street
-      ) {
+      if (!this.formData.street) {
         alert("You must add a full address!");
         return;
       }
@@ -95,20 +94,20 @@ export default {
       );
 
       if (data !== "No Results") {
-    let obj = {
-      address: data.address,
-      geoPoint: {
-        latitude: data.geoPoint._latitude || data.geoPoint.latitude,
-        longitude: data.geoPoint._longitude || data.geoPoint.longitude,
-      },
-      eventName: this.formData.eventName,
-      eventDateTime: this.formData.eventDateTime,
-      eventDescription: this.formData.eventDescription,
-      _marker: null,
-    };
-    this.markers.push(obj);
-    this.addMarkers();
-  }
+        let obj = {
+          address: data.address,
+          geoPoint: {
+            latitude: data.geoPoint._latitude || data.geoPoint.latitude,
+            longitude: data.geoPoint._longitude || data.geoPoint.longitude,
+          },
+          eventName: this.formData.eventName,
+          eventDateTime: this.formData.eventDateTime,
+          eventDescription: this.formData.eventDescription,
+          _marker: null,
+        };
+        this.markers.push(obj);
+        this.addMarkers();
+      }
 
       this.formData.street = "";
       this.formData.eventName = "";
@@ -116,28 +115,35 @@ export default {
       this.formData.eventDescription = "";
     },
     addMarkers() {
-  this.markers.forEach((marker, index) => {
-    if (!marker._marker) {  // Check if the marker hasn't been added to the map yet
-      // eslint-disable-next-line no-undef
-      const googleMarker = new google.maps.Marker({
-        // eslint-disable-next-line no-undef
-        position: new google.maps.LatLng(marker.geoPoint.latitude, marker.geoPoint.longitude),
-        map: this.map,
+      this.markers.forEach((marker, index) => {
+        if (!marker._marker) {
+          // Check if the marker hasn't been added to the map yet
+          // eslint-disable-next-line no-undef
+          const googleMarker = new google.maps.Marker({
+            // eslint-disable-next-line no-undef
+            position: new google.maps.LatLng(
+              marker.geoPoint.latitude,
+              marker.geoPoint.longitude
+            ),
+            map: this.map,
+          });
+          this.markers[index]._marker = googleMarker; // Store the marker instance
+        }
       });
-      this.markers[index]._marker = googleMarker;  // Store the marker instance
-    }
-  });
-  console.log("Markers added to the map:", this.markers);
-},
-zoomToLocation(geoPoint) {
+      console.log("Markers added to the map:", this.markers);
+    },
+    zoomToLocation(geoPoint) {
       if (!this.map || !geoPoint) return;
       // eslint-disable-next-line no-undef
-      const center = new google.maps.LatLng(geoPoint.latitude, geoPoint.longitude);
+      const center = new google.maps.LatLng(
+        geoPoint.latitude,
+        geoPoint.longitude
+      );
       this.map.setZoom(15); // Or any other zoom level you prefer
       this.map.panTo(center);
     },
-    },
-    watch: {
+  },
+  watch: {
     markers: {
       handler(newMarkers) {
         this.addMarkers(); // This will add markers to the map whenever the markers array changes
@@ -145,6 +151,6 @@ zoomToLocation(geoPoint) {
       deep: true, // Watches for changes in nested properties inside the array
       immediate: true, // Immediately invokes the handler with the current value of the expression
     },
-  },    
+  },
 };
 </script>
