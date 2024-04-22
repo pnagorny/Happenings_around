@@ -12,7 +12,7 @@
           <span class="dark:text-slate-400">Around</span>
         </div>
         <p class="text-sm text-slate-600">
-          Dostarczamy platformę na której użytkownicy są zalogowani ;p mogą
+          Dostarczamy platformę na której użytkownicy mogą
           wyszukiwać interesujace ich wydarzenia w okolicy, tworzyć je lub brać
           w nich udział.
         </p>
