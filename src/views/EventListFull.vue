@@ -317,19 +317,26 @@ export default {
     onMounted(() => {
       const auth = getAuth();
       onAuthStateChanged(auth, async (authUser) => {
-        if (authUser) {
-          isLoggedIn.value = true;
-          const userDoc = await getDoc(doc(db, "users", authUser.uid));
-          if (userDoc.exists()) {
-            user.value = { uid: authUser.uid, ...userDoc.data() };
-          } else {
-            console.log("No such document!");
-          }
-        } else {
-          isLoggedIn.value = false;
-          user.value = null;
-        }
-      });
+  if (authUser) {
+    isLoggedIn.value = true;
+    const userDoc = await getDoc(doc(db, "users", authUser.uid));
+    if (userDoc.exists()) {
+      // Ensure likedEvents is initialized
+      const userData = userDoc.data();
+      if (!userData.likedEvents) {
+        userData.likedEvents = [];
+      }
+      user.value = { uid: authUser.uid, ...userData };
+    } else {
+      console.log("No such document!");
+      // Initialize with defaults if the document does not exist
+      user.value = { uid: authUser.uid, likedEvents: [] };
+    }
+  } else {
+    isLoggedIn.value = false;
+    user.value = null;
+  }
+});
       unsubscribe = db.collection("locations").onSnapshot(
         (snapshot) => {
           events.value = snapshot.docs.map((doc) => {
@@ -346,32 +353,37 @@ export default {
     });
 
     const toggleLikeEvent = async (event) => {
-      if (!user.value) return;
-      const eventRef = doc(db, "locations", event.id);
-      const userDocRef = doc(db, "users", user.value.uid);
-      if (isEventLiked(event.id)) {
-        await updateDoc(userDocRef, {
-          likedEvents: arrayRemove(event.id),
-        });
-        await updateDoc(eventRef, {
-          likesCount: increment(-1),
-        });
-        user.value.likedEvents = user.value.likedEvents.filter(
-          (id) => id !== event.id
-        );
-      } else {
-        await updateDoc(userDocRef, {
-          likedEvents: arrayUnion(event.id),
-        });
-        await updateDoc(eventRef, {
-          likesCount: increment(1),
-        });
-        user.value.likedEvents.push(event.id);
-      }
-    };
+  if (!user.value) return;
+  const eventRef = doc(db, "locations", event.id);
+  const userDocRef = doc(db, "users", user.value.uid);
 
-    const isEventLiked = (eventId) => {
-  return user.value?.likedEvents?.includes(eventId);
+  // Ensure likedEvents is an array before trying to use push or arrayRemove/arrayUnion
+  if (!Array.isArray(user.value.likedEvents)) {
+    user.value.likedEvents = [];
+  }
+
+  if (isEventLiked(event.id)) {
+    await updateDoc(userDocRef, {
+      likedEvents: arrayRemove(event.id),
+    });
+    await updateDoc(eventRef, {
+      likesCount: increment(-1),
+    });
+    user.value.likedEvents = user.value.likedEvents.filter((id) => id !== event.id);
+  } else {
+    await updateDoc(userDocRef, {
+      likedEvents: arrayUnion(event.id),
+    });
+    await updateDoc(eventRef, {
+      likesCount: increment(1),
+    });
+    user.value.likedEvents.push(event.id);
+  }
+};
+
+const isEventLiked = (eventId) => {
+  // Check if likedEvents is defined and includes the eventId
+  return Array.isArray(user.value?.likedEvents) && user.value.likedEvents.includes(eventId);
 };
 
     watch(filter, applyFilter);
