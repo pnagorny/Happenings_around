@@ -1,9 +1,7 @@
 <template>
   <body>
-    <section id="about-section">
-      <HeaderLoggedIn v-if="isLoggedIn" />
+    <HeaderLoggedIn v-if="isLoggedIn" />
       <HeaderNotLoggedIn v-else />
-    </section>
     <section class="">
       <div class="bg-gradient-to-b from-2_color to-1_color p-40 text-2xl shadow-2xl font-bold title-font text-slate-200 font-sans">
         <div class="py-8 flex justify-center items-center">
@@ -35,7 +33,7 @@
     </button>
 </section>
 <section id="aboutus-info" class="text-white py-8">
-  <div class="flex items-center justify-center text-6xl font-bold py-8">Jak to działa?</div>
+  <div class="flex items-center justify-center text-6xl font-bold py-8">Jak zacząć?</div>
   <div class="flex items-center justify-center space-x-10"> <!-- Adjust spacing as necessary -->
     <div class="flex items-center flex-col">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -126,7 +124,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, reactive, onUnmounted, nextTick, watch, computed } from "vue";
 import RegisterParent from "../components/RegisterParent.vue";
 import ModalComponentParentLogged from "../components/ModalComponentParentForLoggedIn.vue";
 import HeaderLoggedIn from "../components/HeaderLoggedIn.vue";
@@ -151,6 +149,7 @@ export default {
     const activePhotoIndex = ref(0);
     const photoSliderItems = reactive([]);
     const intervalId = ref(null);
+    const auth = getAuth();
     const faqs = reactive([
       { 
         id: 1,
@@ -213,21 +212,55 @@ export default {
       },
     ]);
 
-    onMounted(async () => {
-      await loadImages();
-      intervalId.value = setInterval(() => {
-        activePhotoIndex.value = (activePhotoIndex.value + 1) % photoSliderItems.length;
-        console.log('Changed slide to index:', activePhotoIndex.value);
-      }, 3000);
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        isLoggedIn.value = !!user;
-      });
-    });
+    
 
-    onUnmounted(() => {
-      clearInterval(intervalId.value); // Clean up the interval when component is unmounted
-    });
+    onMounted(() => {
+  loadImages().then((images) => {
+    images.forEach(image => photoSliderItems.push(image));
+    console.log("Loaded images:", photoSliderItems);
+    intervalId.value = setInterval(() => {
+      activePhotoIndex.value = (activePhotoIndex.value + 1) % photoSliderItems.length;
+      console.log('Changed slide to index:', activePhotoIndex.value);
+    }, 3000);
+  }).catch(error => {
+    console.error("Error during image loading initialization:", error);
+  });
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    isLoggedIn.value = !!user;
+    console.log('Authentication status checked:', isLoggedIn.value);
+  });
+});
+
+    function loadImages() {
+  const basePath = 'sliderPhotos/';
+  const imageDetails = [
+    { filename: '1-slide.jpg', caption: 'Odkryj najnowsze eventy w Twojej okolicy!' },
+    { filename: '2-slide.jpg', caption: 'Dołącz do zabawy na wydarzeniach społecznych!' },
+    { filename: '3-slide.jpg', caption: 'Odkrywaj wydarzenia zgodne z Twoimi pasjami!' }
+  ];
+
+  const promises = imageDetails.map((detail) => {
+    const imageRef = storageRef(storage, `${basePath}${detail.filename}`);
+    return getDownloadURL(imageRef)
+      .then((url) => {
+        return { url, caption: detail.caption }; // Return an object with url and caption
+      })
+      .catch((error) => {
+        console.error(`Failed to load image ${detail.filename}:`, error);
+        return null; // Return null if there's an error
+      });
+  });
+
+  return Promise.all(promises).then((images) => {
+    return images.filter(image => image !== null); // Filter out null values
+  });
+}
+
+onUnmounted(() => {
+  clearInterval(intervalId.value);
+});
 
     function toggleFaq(id) {
       const faq = faqs.find(f => f.id === id);
@@ -235,25 +268,6 @@ export default {
         faq.isOpen = !faq.isOpen;
       }
     }
-    const loadImages = async () => {
-    const basePath = 'sliderPhotos/';
-    const imageDetails = [
-        { filename: '1-slide.jpg', caption: 'Odkryj najnowsze eventy w Twojej okolicy!' },
-        { filename: '2-slide.jpg', caption: 'Dołącz do zabawy na wydarzeniach społecznych!' },
-        { filename: '3-slide.jpg', caption: 'Odkrywaj wydarzenia zgodne z Twoimi pasjami!' }
-    ];
-    for (const { filename, caption } of imageDetails) {
-        const imageRef = storageRef(storage, `${basePath}${filename}`);
-        try {
-            const url = await getDownloadURL(imageRef);
-            photoSliderItems.push({ url, caption });
-            console.log(`Loaded image ${filename}: ${url}`);
-        } catch (error) {
-            console.error(`Failed to load image ${filename}:`, error);
-        }
-    }
-    console.log('All images loaded:', photoSliderItems);
-};
 
     const changePhoto = (direction) => {
       const nextIndex = direction === 'next'
