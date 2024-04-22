@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import VueGoogleMaps from 'vue-google-maps-community-fork';
 import './assets/tailwind.css';
 import { onAuthStateChanged } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 
 var firebaseConfig = {
@@ -22,8 +23,9 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const Firestore = firebase.firestore;
 export const db = Firestore(); // eslint-disable-line
-
 let app;
+const storage = getStorage(app);
+export { storage };
 
 firebase.auth().onAuthStateChanged((user) => {
   if (!app) {
@@ -36,6 +38,7 @@ firebase.auth().onAuthStateChanged((user) => {
       })
       .mount('#app');
   }
+  
 
   if (user) {
     // User is logged in, you can store the user details in your app's state
@@ -45,3 +48,4 @@ firebase.auth().onAuthStateChanged((user) => {
     console.log('No user is logged in');
   }
 });
+

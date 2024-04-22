@@ -63,39 +63,19 @@
             <router-link
               class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
               to="/about"
-              @click.native="navigateToMissionSection"
+              @click.native="navigateToFaqSection"
             >
-              Our Mission
+              FAQ
             </router-link>
           </li>
           <li class="pt-3">
             <router-link
               class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
               to="/about"
-              @click.native="navigateToAuthorsSection"
+              @click.native="navigateToContactSection"
             >
-              Authors
+              Skontaktuj się z nami
             </router-link>
-          </li>
-          <li class="pt-3">
-            <a
-              class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-              href="#"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Privacy Policy
-            </a>
-          </li>
-          <li class="pt-3">
-            <a
-              class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-              href="#"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Cookie Policy
-            </a>
           </li>
         </ul>
       </div>
@@ -112,6 +92,7 @@
           </li>
         </ul>
       </div>
+      
     </div>
     <div
       class="container mx-auto border-t border-slate-200 p-8 text-center text-sm text-slate-600 dark:border-slate-900 md:flex-row md:px-12"
@@ -134,26 +115,6 @@ export default {
   methods: {
     showAuthModal() {
       this.$refs.authModal.showModal = true;
-    },
-    navigateToAuthorsSection() {
-      this.$router.push({ name: "about" }).then(() => {
-        this.$nextTick(() => {
-          const authorsSection = document.getElementById("authors-section-id");
-          if (authorsSection) {
-            authorsSection.scrollIntoView({ behavior: "smooth" });
-          }
-        });
-      });
-    },
-    navigateToMissionSection() {
-      this.$router.push({ name: "about" }).then(() => {
-        this.$nextTick(() => {
-          const missionSection = document.getElementById("mission-items");
-          if (missionSection) {
-            missionSection.scrollIntoView({ behavior: "smooth" });
-          }
-        });
-      });
     },
     navigateToMapSection() {
       this.$router.push({ name: "home" }).then(() => {
@@ -189,6 +150,26 @@ export default {
       this.$router.push({ name: "about" }).then(() => {
         this.$nextTick(() => {
           const aboutSection = document.getElementById("about-section");
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+    },
+    navigateToFaqSection() {
+      this.$router.push({ name: "about" }).then(() => {
+        this.$nextTick(() => {
+          const aboutSection = document.getElementById("aboutus-faq");
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+    },
+    navigateToContactSection() {
+      this.$router.push({ name: "about" }).then(() => {
+        this.$nextTick(() => {
+          const aboutSection = document.getElementById("aboutus-contact-form");
           if (aboutSection) {
             aboutSection.scrollIntoView({ behavior: "smooth" });
           }
