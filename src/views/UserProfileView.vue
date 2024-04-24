@@ -167,6 +167,24 @@
                     </div>
                   </dl>
                 </div>
+                <div class="p-4">
+  <button
+    @click="showDeleteAccountModal = true"
+    class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl shadow-lg"
+  >
+    Usuń konto
+  </button>
+</div>
+<div v-if="showDeleteAccountModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center backdrop-filter backdrop-blur-lg z-50">
+  <div class="bg-white p-5 rounded-lg shadow-lg">
+    <h3 class="text-lg font-bold mb-4">Confirm Account Deletion</h3>
+    <input type="password" v-model="deletePassword" placeholder="Enter your password" class="border p-2 w-full mb-4">
+    <div class="flex justify-end space-x-2">
+      <button @click="showDeleteAccountModal = false" class="bg-gray-300 hover:bg-gray-400 text-black py-1 px-3 rounded">Cancel</button>
+      <button @click="deleteAccount" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded">Delete Account</button>
+    </div>
+  </div>
+</div>
               </div>
             </div>
             <div
@@ -349,9 +367,11 @@
 import HeaderLoggedIn from "../components/HeaderLoggedIn.vue";
 import FooterLoggedIn from "@/components/FooterLoggedIn.vue";
 import GoogleMap from "../components/GoogleMap.vue";
-import { getAuth, onAuthStateChanged, updateEmail } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import { getStorage, ref as storageRef, deleteObject } from "firebase/storage";
 import { onMounted, ref, computed, watch, onUnmounted, nextTick } from "vue";
 import { db } from "../main.js";
+import { useRouter } from 'vue-router';
 import {
   doc,
   getDoc,
@@ -362,6 +382,7 @@ import {
   documentId,
   updateDoc,
   arrayRemove,
+  deleteDoc
 } from "firebase/firestore";
 
 export default {
@@ -393,6 +414,45 @@ export default {
     const auth = getAuth();
     const eventModalOpen = ref(false);
     const selectedEvent = ref(null);
+    const showDeleteAccountModal = ref(false);
+    const deletePassword = ref("");
+    const router = useRouter();
+
+    const deleteAccount = async () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (user) {
+    const credential = EmailAuthProvider.credential(user.email, deletePassword.value);
+
+    try {
+      // Reauthenticate user
+      await reauthenticateWithCredential(user, credential);
+      
+      // Deleting the user's profile picture from Firebase Storage
+      if (user.photoURL) {
+        const storage = getStorage();
+        const photoRef = storageRef(storage, user.photoURL);
+        await deleteObject(photoRef).catch((error) => {
+          console.error("Failed to delete profile picture:", error);
+        });
+      }
+
+      // Proceed with deleting the user's Firestore data
+      await deleteDoc(doc(db, "users", user.uid));
+      
+      // Delete the user's authentication record
+      await user.delete();
+      console.log("Account deleted successfully.");
+      // Reset modal states
+      showDeleteAccountModal.value = false;
+      // Redirect to home page
+      router.push("/");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+    }
+  }
+};
 
     onMounted(async () => {
       const authUser = auth.currentUser;
@@ -578,6 +638,9 @@ export default {
       closeModal,
       selectedEventPop,
       modalCheckbox,
+      showDeleteAccountModal,
+      deletePassword,
+      deleteAccount
     };
   },
 };

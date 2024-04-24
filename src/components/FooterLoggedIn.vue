@@ -25,25 +25,16 @@
               to="/"
               @click.native="navigateToHomeSection"
             >
-              Home
+              Strona Główna
             </router-link>
           </li>
           <li class="pt-3">
             <router-link
               class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-              to="/"
+              to="/events"
               @click.native="navigateToEventSection"
             >
-              Event
-            </router-link>
-          </li>
-          <li class="pt-3">
-            <router-link
-              class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
-              to="/"
-              @click.native="navigateToMapSection"
-            >
-              Map
+              Wydarzenia
             </router-link>
           </li>
         </ul>
@@ -56,7 +47,7 @@
               to="/about"
               @click.native="navigateToAboutSection"
             >
-              About us
+              O Nas
             </router-link>
           </li>
           <li class="pt-3">
@@ -86,7 +77,7 @@
               @click="showAuthModal"
               class="underline decoration-transparent underline-offset-4 transition hover:decoration-slate-700"
             >
-              Join us
+              Dołącz do nas
             </button>
             <AuthModal ref="authModal" />
           </li>
@@ -116,16 +107,6 @@ export default {
     showAuthModal() {
       this.$refs.authModal.showModal = true;
     },
-    navigateToMapSection() {
-      this.$router.push({ name: "home" }).then(() => {
-        this.$nextTick(() => {
-          const mapSection = document.getElementById("map");
-          if (mapSection) {
-            mapSection.scrollIntoView({ behavior: "smooth" });
-          }
-        });
-      });
-    },
     navigateToEventSection() {
       this.$router.push({ name: "events" }).then(() => {
         this.$nextTick(() => {
@@ -149,7 +130,7 @@ export default {
     navigateToAboutSection() {
       this.$router.push({ name: "about" }).then(() => {
         this.$nextTick(() => {
-          const aboutSection = document.getElementById("about-section");
+          const aboutSection = document.getElementById("aboutus");
           if (aboutSection) {
             aboutSection.scrollIntoView({ behavior: "smooth" });
           }
