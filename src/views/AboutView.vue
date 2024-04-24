@@ -1,8 +1,8 @@
 <template>
   <body>
-    <HeaderLoggedIn v-if="isLoggedIn" />
+    <HeaderLoggedIn v-if="isLoggedIn"/>
       <HeaderNotLoggedIn v-else />
-    <section class="">
+    <section class="" id="aboutus">
       <div class="bg-gradient-to-b from-2_color to-1_color p-40 text-2xl shadow-2xl font-bold title-font text-slate-200 font-sans">
         <div class="py-8 flex justify-center items-center">
           <span class="text-violet-500 text-5xl">Happenings</span>
@@ -159,13 +159,13 @@ export default {
       { 
         id: 2, 
         question: "Czy istnieje limit uczestników wydarzenia?",
-        answer: "Wszystko zależne jest od typu wydarzenia. Jeśli jest to wydarzenie publiczne, limit wskazywany jest przez ilość biletów, które udostępnia organizator. W przypadku wydarzeń prywatnych, limit ustalany jest przez osobę, która to wydarzenie utworzyła. Limit widoczny jest przy wydarzeniu.",
+        answer: "Wszystko zależne jest od typu wydarzenia. Jeśli jest to wydarzenie publiczne, limit wskazywany jest przez ilość biletów, które udostępnia organizator. W przypadku wydarzeń prywatnych, nie ma obowiązującego limitu uczestników.",
         isOpen: false 
       },
       { 
         id: 3,
         question: "Czy mogę zakończyć wydarzenie? Jeśli tak, to co sie stanie?",
-        answer: "Swoje wydarzenie możesz zakończyć w każdym momencie przyciskiem 'Zakończ wydarzenie'. Wydarzenia są również zamykane automatycznie po dacie rozpoczęcia wydarzenia. Po zamknięciu się wydarzenia, jest ono usuwane z listy wydarzeń i nie ma możliwości dołączenia do niego.",
+        answer: "Wydarzenia kończą się automatycznie, gdy się rozpoczynają.",
         isOpen: false 
       },
       { 

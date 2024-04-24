@@ -65,7 +65,7 @@
             {{ selectedEvent.eventName }}
           </h1>
           <h2 class="text-slate-400 pt-2 font-semibold">
-            {{ selectedEvent.eventDateTime }}
+            {{ formatEventDate(selectedEvent.eventDateTime) }}
           </h2>
           <h2 class="text-slate-400 pt-2 font-semibold mb-2">
             {{ selectedEvent.address }}
@@ -175,7 +175,7 @@
                   {{ event.eventName }}
                 </h1>
                 <h2 class="text-slate-400 font-semibold">
-                  {{ event.eventDateTime }}
+                  {{ formatEventDate(event.eventDateTime) }}
                 </h2>
                 <h2 class="text-slate-400 font-semibold">
                   {{ event.address }}
@@ -222,6 +222,7 @@
               </div>
             </div>
           </div>
+          
         </div>
         <div class="container mx-auto mt-8 flex justify-between items-center">
           <button
@@ -284,6 +285,20 @@ export default {
         console.error("GoogleMap component is not properly referenced.");
       }
     },
+    formatEventDate(date) {
+    if (!date) return '';
+    
+    // Create a Date object if not already one
+    if (!(date instanceof Date)) date = new Date(date);
+
+    let day = date.getDate().toString().padStart(2, '0');
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let year = date.getFullYear();
+    let hours = date.getHours().toString().padStart(2, '0');
+    let minutes = date.getMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes} ${day}.${month}.${year}`;
+  },
   },
   name: "EventList",
   setup() {
@@ -314,43 +329,48 @@ export default {
   currentPage.value = 1; // Always reset to the first page when filter changes
 };
 
-    onMounted(() => {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (authUser) => {
-  if (authUser) {
-    isLoggedIn.value = true;
-    const userDoc = await getDoc(doc(db, "users", authUser.uid));
-    if (userDoc.exists()) {
-      // Ensure likedEvents is initialized
-      const userData = userDoc.data();
-      if (!userData.likedEvents) {
-        userData.likedEvents = [];
-      }
-      user.value = { uid: authUser.uid, ...userData };
-    } else {
-      console.log("No such document!");
-      // Initialize with defaults if the document does not exist
-      user.value = { uid: authUser.uid, likedEvents: [] };
-    }
-  } else {
-    isLoggedIn.value = false;
-    user.value = null;
-  }
-});
-      unsubscribe = db.collection("locations").onSnapshot(
-        (snapshot) => {
-          events.value = snapshot.docs.map((doc) => {
-            const data = doc.data();
-            data.eventDateTime = formatDate(data.eventDateTime);
-            return { id: doc.id, ...data };
-          });
-          applyFilter();
-        },
-        (error) => {
-          console.error("Error fetching events:", error);
+onMounted(() => {
+  const auth = getAuth();
+  onAuthStateChanged(auth, async (authUser) => {
+    if (authUser) {
+      isLoggedIn.value = true;
+      const userDoc = await getDoc(doc(db, "users", authUser.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (!userData.likedEvents) {
+          userData.likedEvents = [];
         }
-      );
-    });
+        user.value = { uid: authUser.uid, ...userData };
+      } else {
+        console.log("No such document!");
+        user.value = { uid: authUser.uid, likedEvents: [] };
+      }
+    } else {
+      isLoggedIn.value = false;
+      user.value = null;
+    }
+  });
+  unsubscribe = db.collection("locations").onSnapshot(
+  (snapshot) => {
+    events.value = snapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      // Convert Firestore Timestamp to Date
+      if (data.eventDateTime && data.eventDateTime.toDate) {
+        data.eventDateTime = data.eventDateTime.toDate();
+      } else if (data.eventDateTime && !(data.eventDateTime instanceof Date)) {
+        data.eventDateTime = new Date(data.eventDateTime);
+      }
+
+      return { id: doc.id, ...data };
+    }).sort((a, b) => a.eventDateTime - b.eventDateTime);
+    applyFilter();
+  },
+  (error) => {
+    console.error("Error fetching events:", error);
+  }
+);
+});
 
     const toggleLikeEvent = async (event) => {
   if (!user.value) return;
@@ -460,6 +480,9 @@ const isEventLiked = (eventId) => {
         console.error("Error liking event:", error);
       }
     };
+    const convertToDateObject = (firebaseTimestamp) => {
+  return firebaseTimestamp.toDate(); // Assuming firebaseTimestamp is a Firestore Timestamp
+};
 
     return {
       events: visibleEvents,

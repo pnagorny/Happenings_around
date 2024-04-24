@@ -54,22 +54,29 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 export default {
   name: "EventForm",
   data: () => ({
-    formData: {
-      street: "",
-      eventName: "",
-      eventDateTime: "",
-      eventDescription: "",
-      photoFile: null,
-    },
-    autocomplete: null,
-  }),
-  mounted() {
-    this.initAutocomplete();
+  formData: {
+    street: "",
+    eventName: "",
+    eventDateTime: "",
+    eventDescription: "",
+    photoFile: null,
+    userId: "",
   },
+  autocomplete: null,
+}),
+mounted() {
+  this.initAutocomplete();
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user) {
+    this.formData.userId = user.uid;
+  }
+},
   methods: {
     initAutocomplete() {
       if (window.google && window.google.maps) {
@@ -114,6 +121,7 @@ export default {
             eventDateTime: eventDateTime,
             eventDescription: eventDescription,
             eventPhotoURL: eventPhotoURL,
+            userId: this.formData.userId,
           }
         );
 
