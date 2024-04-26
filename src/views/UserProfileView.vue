@@ -489,20 +489,23 @@ export default {
     });
 
     const updateUpcomingEvent = () => {
-      const now = new Date();
-      let closestEvent = null;
-      let closestTime = Infinity;
-      for (const event of likedEvents.value) {
-        const eventDate = new Date(event.eventDateTime);
-        const timeDiff = eventDate - now;
-        if (timeDiff > 0 && timeDiff < closestTime) {
-          closestEvent = event;
-          closestTime = timeDiff;
-        }
-      }
-      upcomingEvent.value = closestEvent;
-      updateCountdown();
-    };
+  const now = new Date();
+  let closestEvent = null;
+  let closestTime = Infinity;
+  for (const event of likedEvents.value) {
+    const eventDate = event.eventDateTime.toDate(); // Make sure the conversion is correct
+    const timeDiff = eventDate - now;
+    console.log(`Event: ${event.eventName}, Time Diff: ${timeDiff}`);
+
+    if (timeDiff > 0 && timeDiff < closestTime) {
+      closestEvent = event;
+      closestTime = timeDiff;
+    }
+  }
+  upcomingEvent.value = closestEvent;
+  console.log("Closest Event: ", upcomingEvent.value);
+  updateCountdown();
+};
     const contentClass = (id) => {
       return [
         "leading-relaxed line-clamp-5 py-2 text-sm font-light mb-3 transition-max-height ",
@@ -528,17 +531,28 @@ export default {
       }
     };
 
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return `${date.getHours().toString().padStart(2, "0")}:${date
-        .getMinutes()
-        .toString()
-        .padStart(2, "0")} ${date.getDate().toString().padStart(2, "0")}/${(
-        date.getMonth() + 1
-      )
-        .toString()
-        .padStart(2, "0")}/${date.getFullYear()}`;
-    };
+    const formatDate = (firestoreTimestamp) => {
+  if (!firestoreTimestamp) return '';
+
+  // Convert Firestore Timestamp to JavaScript Date object
+  let date;
+  if (firestoreTimestamp.toDate) {
+    date = firestoreTimestamp.toDate();
+  } else if (firestoreTimestamp instanceof Date) {
+    date = firestoreTimestamp;
+  } else {
+    return 'Invalid date';
+  }
+
+  // Format the date
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${hours}:${minutes} ${day}/${month}/${year}`;
+};
 
     const scrollLeft = () => {
       if (scrollContainer.value) {
