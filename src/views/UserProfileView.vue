@@ -191,8 +191,11 @@
               class="w-1/2 h-auto flex flex-col justify-center items-center text-end"
             >
               <div class="flex">
-                <h1 class="text-8xl text-white w-full font-bold -mb-4">
+                <h1 v-if="upcomingEvent" class="text-8xl text-white w-full font-bold -mb-4">
                   Już wkrótce
+                </h1>
+                <h1 v-else class="text-5xl text-white w-full font-bold -mb-4">
+                  Weź udział w wydarzeniu aby zobaczyć zbiżający się event
                 </h1>
               </div>
               <div v-if="upcomingEvent" class="w-3/4 text-start">
@@ -234,8 +237,11 @@
             </div>
           </div>
           <div class="px-4 flex mt-28 mb-2">
-            <h1 class="px-4 text-8xl text-white font-bold ml-5">
+            <h1 v-if="likedEvents.length > 0" class="px-4 text-8xl text-white font-bold ml-5">
               Polubione wydarzenia
+            </h1>
+            <h1 v-else class="px-4 text-5xl text-white font-bold ml-5">
+              Polub wydarzenia aby zobaczyć je w tym miejscu
             </h1>
           </div>
           <div
