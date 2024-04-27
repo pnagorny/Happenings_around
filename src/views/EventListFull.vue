@@ -222,7 +222,6 @@
               </div>
             </div>
           </div>
-          
         </div>
         <div class="container mx-auto mt-8 flex justify-between items-center">
           <button
@@ -286,19 +285,19 @@ export default {
       }
     },
     formatEventDate(date) {
-    if (!date) return '';
-    
-    // Create a Date object if not already one
-    if (!(date instanceof Date)) date = new Date(date);
+      if (!date) return "";
 
-    let day = date.getDate().toString().padStart(2, '0');
-    let month = (date.getMonth() + 1).toString().padStart(2, '0');
-    let year = date.getFullYear();
-    let hours = date.getHours().toString().padStart(2, '0');
-    let minutes = date.getMinutes().toString().padStart(2, '0');
+      // Create a Date object if not already one
+      if (!(date instanceof Date)) date = new Date(date);
 
-    return `${hours}:${minutes} ${day}.${month}.${year}`;
-  },
+      let day = date.getDate().toString().padStart(2, "0");
+      let month = (date.getMonth() + 1).toString().padStart(2, "0");
+      let year = date.getFullYear();
+      let hours = date.getHours().toString().padStart(2, "0");
+      let minutes = date.getMinutes().toString().padStart(2, "0");
+
+      return `${hours}:${minutes} ${day}.${month}.${year}`;
+    },
   },
   name: "EventList",
   setup() {
@@ -317,94 +316,110 @@ export default {
     let unsubscribe = null;
 
     const applyFilter = () => {
-  if (filter.value.trim()) {
-    filteredEvents.value = events.value.filter(
-      (event) =>
-        event.eventName && event.eventName.toLowerCase().includes(filter.value.toLowerCase().trim()) ||
-        event.address && event.address.toLowerCase().includes(filter.value.toLowerCase().trim())
-    );
-  } else {
-    filteredEvents.value = events.value; // Show all events if no filter is provided
-  }
-  currentPage.value = 1; // Always reset to the first page when filter changes
-};
-
-onMounted(() => {
-  const auth = getAuth();
-  onAuthStateChanged(auth, async (authUser) => {
-    if (authUser) {
-      isLoggedIn.value = true;
-      const userDoc = await getDoc(doc(db, "users", authUser.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (!userData.likedEvents) {
-          userData.likedEvents = [];
-        }
-        user.value = { uid: authUser.uid, ...userData };
+      if (filter.value.trim()) {
+        filteredEvents.value = events.value.filter(
+          (event) =>
+            (event.eventName &&
+              event.eventName
+                .toLowerCase()
+                .includes(filter.value.toLowerCase().trim())) ||
+            (event.address &&
+              event.address
+                .toLowerCase()
+                .includes(filter.value.toLowerCase().trim()))
+        );
       } else {
-        console.log("No such document!");
-        user.value = { uid: authUser.uid, likedEvents: [] };
+        filteredEvents.value = events.value; // Show all events if no filter is provided
       }
-    } else {
-      isLoggedIn.value = false;
-      user.value = null;
-    }
-  });
-  unsubscribe = db.collection("locations").onSnapshot(
-  (snapshot) => {
-    events.value = snapshot.docs.map((doc) => {
-      const data = doc.data();
+      currentPage.value = 1; // Always reset to the first page when filter changes
+    };
 
-      // Convert Firestore Timestamp to Date
-      if (data.eventDateTime && data.eventDateTime.toDate) {
-        data.eventDateTime = data.eventDateTime.toDate();
-      } else if (data.eventDateTime && !(data.eventDateTime instanceof Date)) {
-        data.eventDateTime = new Date(data.eventDateTime);
-      }
+    onMounted(() => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (authUser) => {
+        if (authUser) {
+          isLoggedIn.value = true;
+          const userDoc = await getDoc(doc(db, "users", authUser.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (!userData.likedEvents) {
+              userData.likedEvents = [];
+            }
+            user.value = { uid: authUser.uid, ...userData };
+          } else {
+            console.log("No such document!");
+            user.value = { uid: authUser.uid, likedEvents: [] };
+          }
+        } else {
+          isLoggedIn.value = false;
+          user.value = null;
+        }
+      });
+      unsubscribe = db.collection("locations").onSnapshot(
+        (snapshot) => {
+          events.value = snapshot.docs
+            .map((doc) => {
+              const data = doc.data();
 
-      return { id: doc.id, ...data };
-    }).sort((a, b) => a.eventDateTime - b.eventDateTime);
-    applyFilter();
-  },
-  (error) => {
-    console.error("Error fetching events:", error);
-  }
-);
-});
+              // Convert Firestore Timestamp to Date
+              if (data.eventDateTime && data.eventDateTime.toDate) {
+                data.eventDateTime = data.eventDateTime.toDate();
+              } else if (
+                data.eventDateTime &&
+                !(data.eventDateTime instanceof Date)
+              ) {
+                data.eventDateTime = new Date(data.eventDateTime);
+              }
+
+              return { id: doc.id, ...data };
+            })
+            .sort((a, b) => a.eventDateTime - b.eventDateTime);
+          applyFilter();
+        },
+        (error) => {
+          console.error("Error fetching events:", error);
+        }
+      );
+    });
 
     const toggleLikeEvent = async (event) => {
-  if (!user.value) return;
-  const eventRef = doc(db, "locations", event.id);
-  const userDocRef = doc(db, "users", user.value.uid);
+      if (!user.value) return;
+      const eventRef = doc(db, "locations", event.id);
+      const userDocRef = doc(db, "users", user.value.uid);
 
-  // Ensure likedEvents is an array before trying to use push or arrayRemove/arrayUnion
-  if (!Array.isArray(user.value.likedEvents)) {
-    user.value.likedEvents = [];
-  }
+      // Ensure likedEvents is an array before trying to use push or arrayRemove/arrayUnion
+      if (!Array.isArray(user.value.likedEvents)) {
+        user.value.likedEvents = [];
+      }
 
-  if (isEventLiked(event.id)) {
-    await updateDoc(userDocRef, {
-      likedEvents: arrayRemove(event.id),
-    });
-    await updateDoc(eventRef, {
-      likesCount: increment(-1),
-    });
-    user.value.likedEvents = user.value.likedEvents.filter((id) => id !== event.id);
-  } else {
-    await updateDoc(userDocRef, {
-      likedEvents: arrayUnion(event.id),
-    });
-    await updateDoc(eventRef, {
-      likesCount: increment(1),
-    });
-    user.value.likedEvents.push(event.id);
-  }
-};
+      if (isEventLiked(event.id)) {
+        await updateDoc(userDocRef, {
+          likedEvents: arrayRemove(event.id),
+        });
+        await updateDoc(eventRef, {
+          likesCount: increment(-1),
+        });
+        user.value.likedEvents = user.value.likedEvents.filter(
+          (id) => id !== event.id
+        );
+      } else {
+        await updateDoc(userDocRef, {
+          likedEvents: arrayUnion(event.id),
+        });
+        await updateDoc(eventRef, {
+          likesCount: increment(1),
+        });
+        user.value.likedEvents.push(event.id);
+      }
+    };
 
-const isEventLiked = (eventId) => {
-  // Check if likedEvents is defined and includes the eventId
-  return Array.isArray(user.value?.likedEvents) && user.value.likedEvents.includes(eventId);
-};
+    const isEventLiked = (eventId) => {
+      // Check if likedEvents is defined and includes the eventId
+      return (
+        Array.isArray(user.value?.likedEvents) &&
+        user.value.likedEvents.includes(eventId)
+      );
+    };
 
     watch(filter, applyFilter);
 
@@ -481,8 +496,8 @@ const isEventLiked = (eventId) => {
       }
     };
     const convertToDateObject = (firebaseTimestamp) => {
-  return firebaseTimestamp.toDate(); // Assuming firebaseTimestamp is a Firestore Timestamp
-};
+      return firebaseTimestamp.toDate(); // Assuming firebaseTimestamp is a Firestore Timestamp
+    };
 
     return {
       events: visibleEvents,

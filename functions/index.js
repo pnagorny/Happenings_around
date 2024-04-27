@@ -51,7 +51,9 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
       eventPhotoURL,
     } = request.body;
 
-    const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleMapsApiKey}`);
+    const {data} = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleMapsApiKey}`,
+    );
 
     if (data.status !== "OK") {
       return cors(request, response, () => {
@@ -63,7 +65,9 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
 
     // Convert eventDateTime from ISO string to Firestore Timestamp
     // eslint-disable-next-line max-len
-    const eventTimestamp = admin.firestore.Timestamp.fromDate(new Date(eventDateTime));
+    const eventTimestamp = admin.firestore.Timestamp.fromDate(
+        new Date(eventDateTime),
+    );
 
     const objGeocodedLocation = {
       address: geocodedLocation.formatted_address,
@@ -89,35 +93,42 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
   }
 });
 // eslint-disable-next-line max-len
-exports.deletePastEvents = functions.pubsub.schedule("every 5 minutes").onRun(async (context) => {
-  const now = new Date();
-  now.setHours(now.getHours() + 2);
+exports.deletePastEvents = functions.pubsub
+    .schedule("every 5 minutes")
+    .onRun(async (context) => {
+      const now = new Date();
+      now.setHours(now.getHours() + 2);
 
-  const firestoreTimestamp = admin.firestore.Timestamp.fromDate(now);
+      const firestoreTimestamp = admin.firestore.Timestamp.fromDate(now);
 
-  // eslint-disable-next-line max-len
-  const pastEventsQuery = db.collection("locations").where("eventDateTime", "<", firestoreTimestamp);
-
-  try {
-    const snapshot = await pastEventsQuery.get();
-    const deletions = [];
-    if (snapshot.empty) {
       // eslint-disable-next-line max-len
-      console.log("Current timestamp for query:", firestoreTimestamp.toDate().toISOString());
-      console.log("No matching documents.");
-      return null;
-    }
+      const pastEventsQuery = db
+          .collection("locations")
+          .where("eventDateTime", "<", firestoreTimestamp);
 
-    snapshot.forEach((doc) => {
-      deletions.push(doc.ref.delete());
-      console.log(`Queuing deletion for event: ${doc.id}`);
+      try {
+        const snapshot = await pastEventsQuery.get();
+        const deletions = [];
+        if (snapshot.empty) {
+        // eslint-disable-next-line max-len
+          console.log(
+              "Current timestamp for query:",
+              firestoreTimestamp.toDate().toISOString(),
+          );
+          console.log("No matching documents.");
+          return null;
+        }
+
+        snapshot.forEach((doc) => {
+          deletions.push(doc.ref.delete());
+          console.log(`Queuing deletion for event: ${doc.id}`);
+        });
+
+        await Promise.all(deletions);
+        console.log(`Deleted ${deletions.length} past events.`);
+        return null;
+      } catch (error) {
+        console.error("Error deleting past events:", error);
+        return null;
+      }
     });
-
-    await Promise.all(deletions);
-    console.log(`Deleted ${deletions.length} past events.`);
-    return null;
-  } catch (error) {
-    console.error("Error deleting past events:", error);
-    return null;
-  }
-});

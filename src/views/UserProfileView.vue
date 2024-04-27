@@ -168,30 +168,53 @@
                   </dl>
                 </div>
                 <div class="p-4">
-  <button
-    @click="showDeleteAccountModal = true"
-    class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl shadow-lg"
-  >
-    Usuń konto
-  </button>
-</div>
-<div v-if="showDeleteAccountModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center backdrop-filter backdrop-blur-lg z-50">
-  <div class="bg-white p-5 rounded-lg shadow-lg">
-    <h3 class="text-lg font-bold mb-4">Confirm Account Deletion</h3>
-    <input type="password" v-model="deletePassword" placeholder="Enter your password" class="border p-2 w-full mb-4">
-    <div class="flex justify-end space-x-2">
-      <button @click="showDeleteAccountModal = false" class="bg-gray-300 hover:bg-gray-400 text-black py-1 px-3 rounded">Cancel</button>
-      <button @click="deleteAccount" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded">Delete Account</button>
-    </div>
-  </div>
-</div>
+                  <button
+                    @click="showDeleteAccountModal = true"
+                    class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-xl shadow-lg"
+                  >
+                    Usuń konto
+                  </button>
+                </div>
+                <div
+                  v-if="showDeleteAccountModal"
+                  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center backdrop-filter backdrop-blur-lg z-50"
+                >
+                  <div class="bg-white p-5 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-bold mb-4">
+                      Confirm Account Deletion
+                    </h3>
+                    <input
+                      type="password"
+                      v-model="deletePassword"
+                      placeholder="Enter your password"
+                      class="border p-2 w-full mb-4"
+                    />
+                    <div class="flex justify-end space-x-2">
+                      <button
+                        @click="showDeleteAccountModal = false"
+                        class="bg-gray-300 hover:bg-gray-400 text-black py-1 px-3 rounded"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        @click="deleteAccount"
+                        class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+                      >
+                        Delete Account
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div
               class="w-1/2 h-auto flex flex-col justify-center items-center text-end"
             >
               <div class="flex">
-                <h1 v-if="upcomingEvent" class="text-8xl text-white w-full font-bold -mb-4">
+                <h1
+                  v-if="upcomingEvent"
+                  class="text-8xl text-white w-full font-bold -mb-4"
+                >
                   Już wkrótce
                 </h1>
                 <h1 v-else class="text-5xl text-white w-full font-bold -mb-4">
@@ -237,7 +260,10 @@
             </div>
           </div>
           <div class="px-4 flex mt-28 mb-2">
-            <h1 v-if="likedEvents.length > 0" class="px-4 text-8xl text-white font-bold ml-5">
+            <h1
+              v-if="likedEvents.length > 0"
+              class="px-4 text-8xl text-white font-bold ml-5"
+            >
               Polubione wydarzenia
             </h1>
             <h1 v-else class="px-4 text-5xl text-white font-bold ml-5">
@@ -373,11 +399,17 @@
 import HeaderLoggedIn from "../components/HeaderLoggedIn.vue";
 import FooterLoggedIn from "@/components/FooterLoggedIn.vue";
 import GoogleMap from "../components/GoogleMap.vue";
-import { getAuth, onAuthStateChanged, updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  updateEmail,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 import { getStorage, ref as storageRef, deleteObject } from "firebase/storage";
 import { onMounted, ref, computed, watch, onUnmounted, nextTick } from "vue";
 import { db } from "../main.js";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 import {
   doc,
   getDoc,
@@ -388,7 +420,7 @@ import {
   documentId,
   updateDoc,
   arrayRemove,
-  deleteDoc
+  deleteDoc,
 } from "firebase/firestore";
 
 export default {
@@ -425,40 +457,43 @@ export default {
     const router = useRouter();
 
     const deleteAccount = async () => {
-  const auth = getAuth();
-  const user = auth.currentUser;
+      const auth = getAuth();
+      const user = auth.currentUser;
 
-  if (user) {
-    const credential = EmailAuthProvider.credential(user.email, deletePassword.value);
+      if (user) {
+        const credential = EmailAuthProvider.credential(
+          user.email,
+          deletePassword.value
+        );
 
-    try {
-      // Reauthenticate user
-      await reauthenticateWithCredential(user, credential);
-      
-      // Deleting the user's profile picture from Firebase Storage
-      if (user.photoURL) {
-        const storage = getStorage();
-        const photoRef = storageRef(storage, user.photoURL);
-        await deleteObject(photoRef).catch((error) => {
-          console.error("Failed to delete profile picture:", error);
-        });
+        try {
+          // Reauthenticate user
+          await reauthenticateWithCredential(user, credential);
+
+          // Deleting the user's profile picture from Firebase Storage
+          if (user.photoURL) {
+            const storage = getStorage();
+            const photoRef = storageRef(storage, user.photoURL);
+            await deleteObject(photoRef).catch((error) => {
+              console.error("Failed to delete profile picture:", error);
+            });
+          }
+
+          // Proceed with deleting the user's Firestore data
+          await deleteDoc(doc(db, "users", user.uid));
+
+          // Delete the user's authentication record
+          await user.delete();
+          console.log("Account deleted successfully.");
+          // Reset modal states
+          showDeleteAccountModal.value = false;
+          // Redirect to home page
+          router.push("/");
+        } catch (error) {
+          console.error("Error deleting account:", error);
+        }
       }
-
-      // Proceed with deleting the user's Firestore data
-      await deleteDoc(doc(db, "users", user.uid));
-      
-      // Delete the user's authentication record
-      await user.delete();
-      console.log("Account deleted successfully.");
-      // Reset modal states
-      showDeleteAccountModal.value = false;
-      // Redirect to home page
-      router.push("/");
-    } catch (error) {
-      console.error("Error deleting account:", error);
-    }
-  }
-};
+    };
 
     onMounted(async () => {
       const authUser = auth.currentUser;
@@ -489,23 +524,23 @@ export default {
     });
 
     const updateUpcomingEvent = () => {
-  const now = new Date();
-  let closestEvent = null;
-  let closestTime = Infinity;
-  for (const event of likedEvents.value) {
-    const eventDate = event.eventDateTime.toDate(); // Make sure the conversion is correct
-    const timeDiff = eventDate - now;
-    console.log(`Event: ${event.eventName}, Time Diff: ${timeDiff}`);
+      const now = new Date();
+      let closestEvent = null;
+      let closestTime = Infinity;
+      for (const event of likedEvents.value) {
+        const eventDate = event.eventDateTime.toDate(); // Make sure the conversion is correct
+        const timeDiff = eventDate - now;
+        console.log(`Event: ${event.eventName}, Time Diff: ${timeDiff}`);
 
-    if (timeDiff > 0 && timeDiff < closestTime) {
-      closestEvent = event;
-      closestTime = timeDiff;
-    }
-  }
-  upcomingEvent.value = closestEvent;
-  console.log("Closest Event: ", upcomingEvent.value);
-  updateCountdown();
-};
+        if (timeDiff > 0 && timeDiff < closestTime) {
+          closestEvent = event;
+          closestTime = timeDiff;
+        }
+      }
+      upcomingEvent.value = closestEvent;
+      console.log("Closest Event: ", upcomingEvent.value);
+      updateCountdown();
+    };
     const contentClass = (id) => {
       return [
         "leading-relaxed line-clamp-5 py-2 text-sm font-light mb-3 transition-max-height ",
@@ -532,27 +567,27 @@ export default {
     };
 
     const formatDate = (firestoreTimestamp) => {
-  if (!firestoreTimestamp) return '';
+      if (!firestoreTimestamp) return "";
 
-  // Convert Firestore Timestamp to JavaScript Date object
-  let date;
-  if (firestoreTimestamp.toDate) {
-    date = firestoreTimestamp.toDate();
-  } else if (firestoreTimestamp instanceof Date) {
-    date = firestoreTimestamp;
-  } else {
-    return 'Invalid date';
-  }
+      // Convert Firestore Timestamp to JavaScript Date object
+      let date;
+      if (firestoreTimestamp.toDate) {
+        date = firestoreTimestamp.toDate();
+      } else if (firestoreTimestamp instanceof Date) {
+        date = firestoreTimestamp;
+      } else {
+        return "Invalid date";
+      }
 
-  // Format the date
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear();
+      // Format the date
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const year = date.getFullYear();
 
-  return `${hours}:${minutes} ${day}/${month}/${year}`;
-};
+      return `${hours}:${minutes} ${day}/${month}/${year}`;
+    };
 
     const scrollLeft = () => {
       if (scrollContainer.value) {
@@ -660,7 +695,7 @@ export default {
       modalCheckbox,
       showDeleteAccountModal,
       deletePassword,
-      deleteAccount
+      deleteAccount,
     };
   },
 };

@@ -12,9 +12,9 @@
           <span class="dark:text-slate-400">Around</span>
         </div>
         <p class="text-sm text-slate-600">
-          Dostarczamy platformę na której użytkownicy mogą
-          wyszukiwać interesujace ich wydarzenia w okolicy, tworzyć je lub brać
-          w nich udział.
+          Dostarczamy platformę na której użytkownicy mogą wyszukiwać
+          interesujace ich wydarzenia w okolicy, tworzyć je lub brać w nich
+          udział.
         </p>
       </div>
       <div class="w-full text-center text-slate-600 md:w-1/5 md:text-left">
@@ -83,7 +83,6 @@
           </li>
         </ul>
       </div>
-      
     </div>
     <div
       class="container mx-auto border-t border-slate-200 p-8 text-center text-sm text-slate-600 dark:border-slate-900 md:flex-row md:px-12"

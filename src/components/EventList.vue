@@ -72,32 +72,34 @@ export default {
     },
   },
   created() {
-  this.unsubscribe = db.collection("locations")
-    .orderBy("eventDateTime", "asc")
-    .onSnapshot(
-      (snapshot) => {
-        this.events = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          // Ensure the eventDateTime is a Firestore Timestamp and convert it
-          if (data.eventDateTime && data.eventDateTime.toDate) {
-            data.rawDate = data.eventDateTime.toDate();
-          } else if (data.eventDateTime) { // Handle cases where eventDateTime might be a string
-            data.rawDate = new Date(data.eventDateTime);
-          }
-          
-          // Format date for display
-          data.eventDateTime = this.formatDate(data.rawDate);
-          return { id: doc.id, ...data };
-        });
+    this.unsubscribe = db
+      .collection("locations")
+      .orderBy("eventDateTime", "asc")
+      .onSnapshot(
+        (snapshot) => {
+          this.events = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            // Ensure the eventDateTime is a Firestore Timestamp and convert it
+            if (data.eventDateTime && data.eventDateTime.toDate) {
+              data.rawDate = data.eventDateTime.toDate();
+            } else if (data.eventDateTime) {
+              // Handle cases where eventDateTime might be a string
+              data.rawDate = new Date(data.eventDateTime);
+            }
 
-        // Ensure sorting happens after the conversion
-        this.events.sort((a, b) => a.rawDate - b.rawDate);
-      },
-      (error) => {
-        console.error("Error fetching events:", error);
-      }
-    );
-},
+            // Format date for display
+            data.eventDateTime = this.formatDate(data.rawDate);
+            return { id: doc.id, ...data };
+          });
+
+          // Ensure sorting happens after the conversion
+          this.events.sort((a, b) => a.rawDate - b.rawDate);
+        },
+        (error) => {
+          console.error("Error fetching events:", error);
+        }
+      );
+  },
   beforeUnmount() {
     // Unsubscribe from the listener when the component is destroyed
     if (this.unsubscribe) {
