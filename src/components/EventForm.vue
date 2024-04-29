@@ -59,7 +59,7 @@ import { getAuth } from "firebase/auth";
 export default {
   name: "EventForm",
   data: () => ({
-  formData: {
+    formData: {
     street: "",
     eventName: "",
     eventDateTime: "",
@@ -79,23 +79,24 @@ mounted() {
 },
   methods: {
     initAutocomplete() {
-      if (window.google && window.google.maps) {
-        // eslint-disable-next-line no-undef
-        this.autocomplete = new google.maps.places.Autocomplete(
-          this.$refs.autocomplete,
-          { types: ["geocode"] }
-        );
-        this.autocomplete.addListener("place_changed", this.onPlaceChanged);
-      }
-    },
-    onPlaceChanged() {
-      const place = this.autocomplete.getPlace();
-      if (place.geometry) {
-        this.formData.street = place.formatted_address;
-      } else {
-        alert("No details available for input: '" + place.name + "'");
-      }
-    },
+  if (window.google && window.google.maps) {
+    this.autocomplete = new google.maps.places.Autocomplete(
+      this.$refs.autocomplete,
+      { types: ['geocode', 'establishment'] }
+    );
+    this.autocomplete.addListener('place_changed', this.onPlaceChanged);
+  }
+},
+onPlaceChanged() {
+  const place = this.autocomplete.getPlace();
+  if (place.geometry) {
+    this.formData.street = place.formatted_address ? place.formatted_address : "";
+    this.formData.latitude = place.geometry.location.lat();
+    this.formData.longitude = place.geometry.location.lng();
+  } else {
+    alert("No details available for input: '" + place.name + "'");
+  }
+},
     handleFileUpload(event) {
       this.formData.photoFile = event.target.files[0];
     },

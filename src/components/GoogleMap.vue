@@ -64,7 +64,6 @@ export default {
       });
     },
     initMap() {
-      // eslint-disable-next-line no-undef
       this.map = new google.maps.Map(this.$refs.map, {
         center: this.center,
         zoom: 12,
@@ -117,17 +116,14 @@ export default {
     addMarkers() {
       this.markers.forEach((marker, index) => {
         if (!marker._marker) {
-          // Check if the marker hasn't been added to the map yet
-          // eslint-disable-next-line no-undef
           const googleMarker = new google.maps.Marker({
-            // eslint-disable-next-line no-undef
             position: new google.maps.LatLng(
               marker.geoPoint.latitude,
               marker.geoPoint.longitude
             ),
             map: this.map,
           });
-          this.markers[index]._marker = googleMarker; // Store the marker instance
+          this.markers[index]._marker = googleMarker;
         }
       });
       console.log("Markers added to the map:", this.markers);
@@ -139,17 +135,17 @@ export default {
         geoPoint.latitude,
         geoPoint.longitude
       );
-      this.map.setZoom(15); // Or any other zoom level you prefer
+      this.map.setZoom(15);
       this.map.panTo(center);
     },
   },
   watch: {
     markers: {
       handler(newMarkers) {
-        this.addMarkers(); // This will add markers to the map whenever the markers array changes
+        this.addMarkers();
       },
-      deep: true, // Watches for changes in nested properties inside the array
-      immediate: true, // Immediately invokes the handler with the current value of the expression
+      deep: true,
+      immediate: true,
     },
   },
 };

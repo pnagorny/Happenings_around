@@ -46,7 +46,7 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
     const {
       address,
       eventName,
-      eventDateTime, // This is the ISO string from the input
+      eventDateTime,
       eventDescription,
       eventPhotoURL,
     } = request.body;
@@ -60,8 +60,6 @@ exports.geocodeAddressAndSave = onRequest(async (request, response) => {
     }
 
     const geocodedLocation = data.results[0];
-
-    // Convert eventDateTime from ISO string to Firestore Timestamp
     // eslint-disable-next-line max-len
     const eventTimestamp = admin.firestore.Timestamp.fromDate(new Date(eventDateTime));
 
