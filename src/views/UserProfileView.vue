@@ -514,22 +514,26 @@ export default {
     };
 
     const updateCountdown = () => {
-      if (!upcomingEvent.value) return;
-      const now = new Date();
-      const eventDate = new Date(upcomingEvent.value.eventDateTime);
-      const timeDiff = eventDate - now;
-      if (timeDiff > 0) {
-        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-        countdown.value = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      } else {
-        countdown.value = "Event has started";
-      }
-    };
+  if (!upcomingEvent.value) {
+    countdown.value = "No upcoming events";
+    return;
+  }
+  const now = new Date();
+  // Zakładamy, że `eventDateTime` jest Firestore Timestamp
+  const eventDate = upcomingEvent.value.eventDateTime.toDate();
+  const timeDiff = eventDate - now;
+
+  if (timeDiff > 0) {
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    countdown.value = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  } else {
+    countdown.value = "Event has started";
+  }
+};
+
 
     const formatDate = (firestoreTimestamp) => {
   if (!firestoreTimestamp) return '';
@@ -544,7 +548,6 @@ export default {
     return 'Invalid date';
   }
 
-  // Format the date
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');

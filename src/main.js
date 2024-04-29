@@ -22,7 +22,7 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const Firestore = firebase.firestore;
-export const db = Firestore(); // eslint-disable-line
+export const db = Firestore();
 let app;
 const storage = getStorage(app);
 export { storage };

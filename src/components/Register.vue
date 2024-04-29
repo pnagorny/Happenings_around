@@ -13,25 +13,25 @@
       /><br />
       <input
         type="password"
-        placeholder="Password"
+        placeholder="Haslo"
         v-model="registerData.password"
         class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
       /><br />
       <input
         type="text"
-        placeholder="Nickname"
+        placeholder="Nazwa użytkownika"
         v-model="registerData.nickname"
         class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
       /><br />
       <input
         type="text"
-        placeholder="Name"
+        placeholder="Imię"
         v-model="registerData.name"
         class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
       /><br />
       <input
         type="text"
-        placeholder="Surname"
+        placeholder="Nazwisko"
         v-model="registerData.surname"
         class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md"
       /><br /><br />
